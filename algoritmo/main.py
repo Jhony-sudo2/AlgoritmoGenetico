@@ -4,7 +4,7 @@ from typing import List
 from algoritmo.cromosoma import Cromosoma, Gen
 from algoritmo.datos import *
 from algoritmo.pdf import *
-
+import matplotlib.pyplot as plt
 
 class AlgoritmoGenetico:
     def __init__(self,cursos, docentes, salones):
@@ -15,9 +15,10 @@ class AlgoritmoGenetico:
         self.NoPoblacion:int = 20
         self.seleccionados:List[Cromosoma] = []
         self.poblacionesFinales:List[Cromosoma] = []
-        self.generacionesMaxima = 100
+        self.generacionesMaxima = 50
         self.opcionMejor:Cromosoma
-        
+        self.promedios = []
+        self.generaciones = []
 
     def Iniciar(self):
         continuar = True
@@ -29,6 +30,7 @@ class AlgoritmoGenetico:
             continuar = self.finalizacion()
             pass
         self.mejorOpcion()
+        self.graficar()
         crerPdf("horario.pdf",self.opcionMejor,self.cursos,self.docentes,self.salones)
         crearCSV("horario.csv",self.opcionMejor,self.cursos,self.docentes,self.salones)
 
@@ -77,7 +79,7 @@ class AlgoritmoGenetico:
     def cruce_multipunto(self, padre1: Cromosoma, padre2: Cromosoma) -> tuple[Cromosoma, Cromosoma]:
         hijo1 = Cromosoma()
         hijo2 = Cromosoma()
-        puntos = sorted(random.sample(range(len(padre1.Genes)), 2))  # 2 puntos aleatorios
+        puntos = sorted(random.sample(range(len(padre1.Genes)), 2))  
     
         for i in range(len(padre1.Genes)):
             if i < puntos[0] or i >= puntos[1]:
@@ -107,6 +109,8 @@ class AlgoritmoGenetico:
         #    print("Puntuacion: ",gen.puntuacion," Promedio solucion: " + str(self.promedioPoblacion(self.seleccionados)))
         print("Puntuacion promedio: ",self.promedioPoblacion(self.seleccionados))
         self.poblacionesFinales.append(self.seleccionados)
+        self.promedios.append(self.promedioPoblacion(self.seleccionados))
+        self.generaciones.append(len(self.promedios))
         self.generacionesMaxima -=1
         if(self.generacionesMaxima <= 0):
             return False
@@ -132,5 +136,7 @@ class AlgoritmoGenetico:
         promedio = puntuacion/len(cromosomas)
         return promedio
 
-    def saludar(self):
-        print("saludando desde el algoritmo genetico")
+    def graficar(self):
+        plt.plot(self.generaciones,self.promedios)
+        plt.title("Funcion aptitud x=numero de generaciones, y = valor de aptitud")
+        plt.show()

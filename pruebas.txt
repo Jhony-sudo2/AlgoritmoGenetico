@@ -1,0 +1,39 @@
+self.salones = [
+    Salon("Aula Magna", 100),
+    Salon("Laboratorio 1", 30),
+    Salon("Aula 305", 40),
+    Salon("Sala de Conferencias", 80),
+    Salon("Laboratorio 2", 25),
+    Salon("Aula 101", 50),
+    Salon("Aula 202", 45),
+    Salon("Laboratorio de Física", 35),
+    Salon("Aula 401", 60),
+    Salon("Sala de Proyecciones", 70)
+]
+        self.cursos = [
+    Curso("Matemáticas Básicas", "MAT101", "Ingeniería", "1", "A", True),
+    Curso("Programación I", "PROG101", "Sistemas", "2", "B", True),
+    Curso("Física Avanzada", "FIS201", "Ingeniería", "3", "A", False),
+    Curso("Inteligencia Artificial", "IA301", "Sistemas", "6", "C", False),
+    Curso("Cálculo Diferencial", "MAT102", "Ingeniería", "2", "B", True),
+    Curso("Bases de Datos", "BD201", "Sistemas", "4", "A", True),
+    Curso("Química General", "QUI101", "Ciencias", "1", "A", True),
+    Curso("Algoritmos Avanzados", "ALG301", "Sistemas", "5", "B", False),
+    Curso("Estadística", "EST201", "Ingeniería", "3", "C", True),
+    Curso("Biología Molecular", "BIO301", "Ciencias", "5", "A", False),
+    Curso("Redes de Computadoras", "RED301", "Sistemas", "6", "B", True),
+    Curso("Mecánica Clásica", "FIS101", "Ingeniería", "2", "A", True),
+    Curso("Programación II", "PROG201", "Sistemas", "3", "C", True),
+    Curso("Geometría Analítica", "MAT201", "Ingeniería", "3", "B", True),
+    Curso("Ecología", "ECO201", "Ciencias", "4", "A", False)
+]
+        self.docentes = [
+    Docente("Ana Pérez", "DOC001", "08:00", "14:00", [0, 4, 8, 13]),        # Matemáticas, Cálculo, Estadística, Geometría
+    Docente("Juan Gómez", "DOC002", "10:00", "16:00", [1, 7, 10, 12]),      # Programación I, Algoritmos, Redes, Programación II
+    Docente("María López", "DOC003", "14:00", "20:00", [1, 3, 7, 10]),      # Programación I, IA, Algoritmos, Redes
+    Docente("Carlos Ruiz", "DOC004", "09:00", "15:00", [0, 2, 4, 11]),      # Matemáticas, Física Avanzada, Cálculo, Mecánica
+    Docente("Elena Martínez", "DOC005", "07:00", "13:00", [6, 9, 14]),      # Química, Biología, Ecología
+    Docente("Pedro Sánchez", "DOC006", "11:00", "17:00", [3, 7, 10, 12]),   # IA, Algoritmos, Redes, Programación II
+    Docente("Laura Fernández", "DOC007", "08:00", "14:00", [2, 8, 11, 13]), # Física Avanzada, Estadística, Mecánica, Geometría
+    Docente("Miguel Torres", "DOC008", "13:00", "19:00", [5, 6, 9, 14])     # Bases de Datos, Química, Biología, Ecología
+]

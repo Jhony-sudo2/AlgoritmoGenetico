@@ -27,7 +27,7 @@ def crerPdf(nombre_archivo, cromosoma:Cromosoma, cursos:List[Curso], docentes, s
     datos = [[None] * (num_salones + 1) for _ in range(num_horarios + 1)] 
     
     # filas,columnas para los datos
-    #columna,fila para los colores
+    
     datos[0][0] = "Horario"  
     for i in range(num_horarios):
         datos[i + 1][0] = cromosoma.getHorario(i)
@@ -36,7 +36,7 @@ def crerPdf(nombre_archivo, cromosoma:Cromosoma, cursos:List[Curso], docentes, s
     for j, salon in enumerate(salones):
         datos[0][j + 1] = salon.nombre
     
-
+    #columna,fila para los colores
     estilo = [
         ('BACKGROUND', (0, 0), (-1, 0), colors.grey),  # Fondo gris para encabezados de salones
         ('BACKGROUND', (0, 0), (0, -1), colors.grey),  # Fondo gris para columna de horarios
@@ -48,7 +48,7 @@ def crerPdf(nombre_archivo, cromosoma:Cromosoma, cursos:List[Curso], docentes, s
         ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),  # Negrita para horarios
         ('FONTSIZE', (0, 0), (-1, -1), 5),  # Tamaño de fuente general
         ('GRID', (0, 0), (-1, -1), 1, colors.black),  # Bordes negros
-        ('BACKGROUND', (5, 6), (5, 6), colors.red),  # Fondo blanco para celdas de datos
+        #('BACKGROUND', (5, 6), (5, 6), colors.red),  # Fondo blanco para celdas de datos
         ('SPAN', (0, 0), (0, 0)),  # Evitar que "Horario" se combine
     ]
     
@@ -59,7 +59,7 @@ def crerPdf(nombre_archivo, cromosoma:Cromosoma, cursos:List[Curso], docentes, s
         indiceSalon = gen.salon
         carrera = curso.carrera     
         color = colores[carrera]
-        datos[indiceHorario + 1][indiceSalon + 1] = f"{curso.nombre}\n({docente_nombre},{curso.semestre})"
+        datos[indiceHorario + 1][indiceSalon + 1] = f"{curso.nombre}\n({docente_nombre}) {curso.semestre}"
         tmp = ("BACKGROUND",(indiceSalon+1,indiceHorario+1),(indiceSalon+1,indiceHorario+1),colors.Color(color[0]/255,color[1]/255,color[2]/255))
         estilo.append(tmp)
     estilo2 = TableStyle(estilo)
@@ -67,8 +67,10 @@ def crerPdf(nombre_archivo, cromosoma:Cromosoma, cursos:List[Curso], docentes, s
     tabla = Table(datos)
     tabla.setStyle(estilo2)
     
-    tabla._argW = [40] + [80] * num_salones  # Ancho: 80 para horarios, 150 para salones
-    tabla._argH = [30] * (num_horarios + 1)   # Alto fijo para todas las filas
+    
+
+    tabla._argW = [num_salones * 7] * (num_salones+1)      #ancho  
+    tabla._argH = [40] * (num_horarios+1)   #alto
     
     elementos.append(tabla)
     doc.build(elementos)

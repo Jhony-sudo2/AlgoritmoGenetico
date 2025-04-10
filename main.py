@@ -48,6 +48,7 @@ class InterfazAcademica:
     Docente("Laura Fernández", "DOC007", "08:00", "14:00", [2, 8, 11, 13]), # Física Avanzada, Estadística, Mecánica, Geometría
     Docente("Miguel Torres", "DOC008", "13:00", "19:00", [5, 6, 9, 14])     # Bases de Datos, Química, Biología, Ecología
 ]
+        self.asignacion = False
         self.root = root
         self.root.title("Sistema de Gestión Académica")
         self.root.geometry("800x400")
@@ -72,7 +73,6 @@ class InterfazAcademica:
 
         self.mostrar_docentes()
     def crearHorario(self):
-        print("NUMERO DE SALONES: " + str(len(self.salones)))
         algoritmo = AlgoritmoGenetico(self.cursos, self.docentes, self.salones)
         algoritmo.Iniciar()
 
@@ -88,10 +88,18 @@ class InterfazAcademica:
         for col in columnas:
             self.tabla_actual.heading(col, text=col)
             self.tabla_actual.column(col, width=100, anchor="center")
-        for objeto in datos:
-            valores = [getattr(objeto, col) for col in columnas]
-            self.tabla_actual.insert("", "end", values=valores)
-        self.tabla_actual.pack(fill="both", expand=True)
+        if not self.asignacion:
+            for objeto in datos:
+                valores = [getattr(objeto, col) for col in columnas]
+                self.tabla_actual.insert("", "end", values=valores)
+            self.tabla_actual.pack(fill="both", expand=True)
+        else:
+            for docente in datos:
+                for curso in docente.cursos_posibles:
+                    valores = [docente.nombre,self.cursos[curso].nombre]
+                    self.tabla_actual.insert("", "end", values=valores)
+                    self.tabla_actual.pack(fill="both", expand=True)
+            self.asignacion = False
 
     def crear_formulario(self, columnas, titulo,arreglo):
         ventana_nuevo = tk.Toplevel(self.root)
@@ -136,7 +144,8 @@ class InterfazAcademica:
     def mostrar_asignacion(self):
         self.limpiar_panel()
         columnas = ("docente", "cursos")
-        self.crear_tabla(columnas,self.AsignacionDocentes)
+        self.asignacion = True
+        self.crear_tabla(columnas,self.docentes)
         self.boton_nuevo = tk.Button(self.frame_superior, text="Nuevo", bg="#008080", fg="white", font=("Arial", 10, "bold"),
                                      command=lambda: self.crear_formulario(columnas, "Asignar Docente",self.AsignacionDocentes))
         self.boton_nuevo.pack(side="right", padx=5)

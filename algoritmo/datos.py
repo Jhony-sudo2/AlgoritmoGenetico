@@ -22,7 +22,7 @@ class Curso:
         pass
 
 class Docente:
-    def __init__(self,nombre:str,codigo:str,horaEntrada,horaSalida,cursos_posibles=None):
+    def __init__(self,nombre:str,codigo:str,horaEntrada,horaSalida,cursos_posibles):
         self.nombre:str = nombre
         self.codigo:str = codigo
         self.horaEntrada = datetime.strptime(horaEntrada,"%H:%M")
