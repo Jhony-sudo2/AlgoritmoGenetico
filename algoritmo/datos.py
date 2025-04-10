@@ -1,3 +1,7 @@
+from datetime import datetime
+from typing import List
+
+
 class Salon:
     def __init__(self,nombre:str,id:int):
         self.nombre:str = nombre
@@ -18,16 +22,13 @@ class Curso:
         pass
 
 class Docente:
-    def __init__(self,nombre:str,codigo:str,horaEntrada,horaSalida):
+    def __init__(self,nombre:str,codigo:str,horaEntrada,horaSalida,cursos_posibles=None):
         self.nombre:str = nombre
         self.codigo:str = codigo
-        self.horaEntrada = horaEntrada
-        self.horaSalida = horaSalida
+        self.horaEntrada = datetime.strptime(horaEntrada,"%H:%M")
+        self.horaSalida = datetime.strptime(horaSalida,"%H:%M")
+        self.cursos_posibles = cursos_posibles        
         pass
 
-class asignacionDocente:
-    def __init__(self,docente:Docente,cursos:Curso):
-        self.docente:Docente = docente
-        self.cursos:Curso = cursos
-        pass
+
     
