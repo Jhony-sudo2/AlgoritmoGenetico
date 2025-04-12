@@ -22,13 +22,10 @@ class Curso:
         pass
 
 class Docente:
-    def __init__(self,nombre:str,codigo:str,horaEntrada,horaSalida,cursos_posibles):
+    def __init__(self,nombre:str,codigo:str,horaEntrada,horaSalida,cursos_posibles=None):
         self.nombre:str = nombre
         self.codigo:str = codigo
-        self.horaEntrada = datetime.strptime(horaEntrada,"%H:%M")
-        self.horaSalida = datetime.strptime(horaSalida,"%H:%M")
-        self.cursos_posibles = cursos_posibles        
-        pass
-
-
-    
+        self.horaEntrada = datetime.strptime(horaEntrada,"%H:%M").time()
+        self.horaSalida = datetime.strptime(horaSalida,"%H:%M").time()
+        self.cursos_posibles = cursos_posibles
+        pass    

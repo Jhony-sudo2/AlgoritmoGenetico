@@ -1,0 +1,16 @@
+Nombre,Código,Carrera,Semestre,Sección,Tipo
+Matemáticas Básicas,MAT101,Ingeniería,1,A,True
+Programación I,PROG101,Sistemas,2,B,True
+Física Avanzada,FIS201,Ingeniería,3,A,False
+Inteligencia Artificial,IA301,Sistemas,6,C,False
+Cálculo Diferencial,MAT102,Ingeniería,2,B,True
+Bases de Datos,BD201,Sistemas,4,A,True
+Química General,QUI101,Ciencias,1,A,True
+Algoritmos Avanzados,ALG301,Sistemas,5,B,False
+Estadística,EST201,Ingeniería,3,C,True
+Biología Molecular,BIO301,Ciencias,5,A,False
+Redes de Computadoras,RED301,Sistemas,6,B,True
+Mecánica Clásica,FIS101,Ingeniería,2,A,True
+Programación II,PROG201,Sistemas,3,C,True
+Geometría Analítica,MAT201,Ingeniería,3,B,True
+Ecología,ECO201,Ciencias,4,A,False

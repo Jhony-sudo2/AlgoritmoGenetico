@@ -1,3 +1,4 @@
+import csv
 import random
 from typing import List
 from reportlab.lib.pagesizes import letter, landscape
@@ -6,7 +7,7 @@ from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 
 from algoritmo.cromosoma import Cromosoma
-from algoritmo.datos import Curso
+from algoritmo.datos import *
 
 def crerPdf(nombre_archivo, cromosoma:Cromosoma, cursos:List[Curso], docentes, salones):
 
@@ -16,7 +17,6 @@ def crerPdf(nombre_archivo, cromosoma:Cromosoma, cursos:List[Curso], docentes, s
     for gen in cromosoma.Genes:
         if cursos[gen.curso].carrera is not colores:
             codigo = (random.randrange(250),random.randrange(250),random.randrange(250))
-            print("codigo: ",codigo)
             colores[cursos[gen.curso].carrera] = codigo
             
     styles = getSampleStyleSheet()
@@ -46,7 +46,7 @@ def crerPdf(nombre_archivo, cromosoma:Cromosoma, cursos:List[Curso], docentes, s
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),  # Alinear verticalmente al centro
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),  # Negrita para salones
         ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),  # Negrita para horarios
-        ('FONTSIZE', (0, 0), (-1, -1), 5),  # Tamaño de fuente general
+        ('FONTSIZE', (0, 0), (-1, -1), 3),  # Tamaño de fuente general
         ('GRID', (0, 0), (-1, -1), 1, colors.black),  # Bordes negros
         #('BACKGROUND', (5, 6), (5, 6), colors.red),  # Fondo blanco para celdas de datos
         ('SPAN', (0, 0), (0, 0)),  # Evitar que "Horario" se combine
@@ -63,13 +63,12 @@ def crerPdf(nombre_archivo, cromosoma:Cromosoma, cursos:List[Curso], docentes, s
         tmp = ("BACKGROUND",(indiceSalon+1,indiceHorario+1),(indiceSalon+1,indiceHorario+1),colors.Color(color[0]/255,color[1]/255,color[2]/255))
         estilo.append(tmp)
     estilo2 = TableStyle(estilo)
-    print(estilo2)
     tabla = Table(datos)
     tabla.setStyle(estilo2)
     
     
 
-    tabla._argW = [num_salones * 7] * (num_salones+1)      #ancho  
+    tabla._argW = [(10/num_salones) * 70] * (num_salones+1)      #ancho  
     tabla._argH = [40] * (num_horarios+1)   #alto
     
     elementos.append(tabla)
@@ -85,3 +84,34 @@ def crearCSV(nombre_archivo, cromosoma, cursos, docentes, salones):
             salon = salones[gen.salon].nombre
             file.write(f"{horario},{salon},{curso_nombre},{docente_nombre}\n")
     print(f"CSV creado: {nombre_archivo}")
+
+def leerCSV(archivo,listado,tipo:int,listado2):
+    #tipo: 1.cursos  2. docente 3. relacionesCursoDocente 4.salones
+    if tipo == 3:
+        docente_dict = {docente.codigo: docente for docente in listado}
+        curso_indices = {curso.codigo: idx for idx, curso in enumerate(listado2)}
+    with open(archivo,newline='',encoding='utf-8') as csvfile:
+        spamreader = csv.DictReader(csvfile)
+        for row in spamreader:
+            match tipo:
+                case 1:
+                    salon = Curso(row['Nombre'],row['Código'],row['Carrera'],row['Semestre'],row['Sección'],row['Tipo'])
+                    listado.append(salon)
+                case 2:
+                    docente = Docente(row['Nombre'],row['Registro'],row['Hora Entrada'],row['Hora Salida'])
+                    listado.append(docente)
+                case 3:
+                    registro = row['Registro de Personal']
+                    codigo_curso = row['Código de Curso']
+                    if registro in docente_dict and codigo_curso in curso_indices:
+                        docente = docente_dict[registro]
+                        indice_curso = curso_indices[codigo_curso]
+                        docente.cursos_posibles.append(indice_curso)
+                case 4:
+                    salon = Salon(row['Nombre'],row['id'])
+                    listado.append(salon)
+                    pass
+
+
+                
+    

@@ -3,7 +3,7 @@ import random
 from typing import List
 from algoritmo.cromosoma import Cromosoma, Gen
 from algoritmo.datos import *
-from algoritmo.pdf import *
+from algoritmo.Archivos import *
 import matplotlib.pyplot as plt
 
 class AlgoritmoGenetico:
@@ -12,10 +12,10 @@ class AlgoritmoGenetico:
         self.docentes:List[Docente] = docentes
         self.salones:List[Salon] = salones
         self.Cromosomas:Cromosoma = []
-        self.NoPoblacion:int = 20
+        self.NoPoblacion:int = 50
         self.seleccionados:List[Cromosoma] = []
         self.poblacionesFinales:List[Cromosoma] = []
-        self.generacionesMaxima = 50
+        self.generacionesMaxima = 500
         self.opcionMejor:Cromosoma
         self.promedios = []
         self.generaciones = []
@@ -61,9 +61,8 @@ class AlgoritmoGenetico:
             self.Cromosomas = self.seleccionados
             self.seleccionados = []
         for i in range(int(self.NoPoblacion/2)):
-            competidores = random.sample(self.Cromosomas, 3)
+            competidores = random.sample(self.Cromosomas, 2)
             ganador = max(competidores, key=lambda x: x.puntuacion)
-            #print(f"Torneo: {[c.puntuacion for c in competidores]} -> Ganador: {ganador.puntuacion}")
             self.seleccionados.append(ganador)
 
     def Cruzamiento(self):
@@ -105,14 +104,17 @@ class AlgoritmoGenetico:
     
     
     def finalizacion(self):
+        #print("generacion: ",self.generacionesMaxima)
         #for gen in self.seleccionados:
         #    print("Puntuacion: ",gen.puntuacion," Promedio solucion: " + str(self.promedioPoblacion(self.seleccionados)))
-        print("Puntuacion promedio: ",self.promedioPoblacion(self.seleccionados))
+            #print("Puntuacion promedio: ",self.promedioPoblacion(self.seleccionados))
+
+        promediotmp = self.promedioPoblacion(self.seleccionados)
         self.poblacionesFinales.append(self.seleccionados)
-        self.promedios.append(self.promedioPoblacion(self.seleccionados))
+        self.promedios.append(promediotmp)
         self.generaciones.append(len(self.promedios))
         self.generacionesMaxima -=1
-        if(self.generacionesMaxima <= 0):
+        if(self.generacionesMaxima <= 0 ):
             return False
         else:
             return True
@@ -124,10 +126,7 @@ class AlgoritmoGenetico:
                 if(tmp2.puntuacion > puntuacion):
                     puntuacion = tmp2.puntuacion
                     self.opcionMejor = tmp2
-        print("mejor puntuacion: ",puntuacion)
-        print("cromosoma",self.opcionMejor)
-        self.opcionMejor.solucion(self.cursos,self.docentes,self.salones)
-
+        print("mejor opcion",self.opcionMejor.puntuacion)
         
     def promedioPoblacion(self,cromosomas:List[Cromosoma]):
         puntuacion = 0
