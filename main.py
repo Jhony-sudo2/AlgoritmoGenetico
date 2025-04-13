@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
 from algoritmo import Archivos
+from algoritmo import main
 from algoritmo.cromosoma import Cromosoma, Gen
 from algoritmo.datos import *
 from algoritmo.main import AlgoritmoGenetico
@@ -154,6 +155,7 @@ class InterfazAcademica:
             if valores[0].isdigit() and valores[1].isdigit():
                 self.NoPoblacion = int(valores[0])
                 self.Generaciones = int(valores[1])
+                messagebox.showinfo("OK","Configuracion guardada exitosamente")
             else:
                 messagebox.showwarning("Error", "Por favor ingrese numeros entero")
 
@@ -331,7 +333,7 @@ class InterfazAcademica:
             self.cursosSeleccionados = self.cursos
         if not self.docentesSeleccionados:
             self.docentesSeleccionados = self.docentes
-        algoritmo = AlgoritmoGenetico(self.cursos,self.docentes,self.salones,self.AsignacionDocentes,self.NoPoblacion,self.Generaciones)
+        algoritmo = AlgoritmoGenetico(self.cursosSeleccionados,self.docentesSeleccionados,self.salones,self.AsignacionDocentes,self.NoPoblacion,self.Generaciones)
         self.AsignacionDocentes = algoritmo.Iniciar()
         self.mostrar_horarios()
     def limpiar_panel(self):
@@ -355,7 +357,7 @@ class InterfazAcademica:
         if not self.asignacion:
             if isinstance(datos,Cromosoma):
                 for gen in datos.Genes:
-                    valorestmp = (gen.horario, self.docentesSeleccionados[gen.docente].nombre, self.cursosSeleccionados[gen.curso].nombre, self.salones[gen.salon].nombre)
+                    valorestmp = (Cromosoma.HORARIOS[gen.horario], self.docentesSeleccionados[gen.docente].nombre, self.cursosSeleccionados[gen.curso].nombre, self.salones[gen.salon].nombre)
                     tabla_actual.insert("", "end", values=valorestmp)
             else:
                 for objeto in datos:
