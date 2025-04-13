@@ -208,87 +208,104 @@ class InterfazAcademica:
 
     def seleccion(self):
         self.limpiar_panel()
-        columnas_docentes = ("nombre", "codigo", "Seleccionar")
-        tabla_docentes = ttk.Treeview(self.frame_tabla, columns=columnas_docentes, show="headings")
-        for col in columnas_docentes:
-            tabla_docentes.heading(col, text=col)
-            tabla_docentes.column(col, width=150, anchor="center")
+
+        # Frame principal para contener las dos secciones (docentes y cursos)
+        frame_principal = tk.Frame(self.frame_tabla)
+        frame_principal.pack(fill="both", expand=True)
+
+        # --- Sección de Docentes ---
+        tk.Label(frame_principal, text="Seleccionar Docentes", font=("Arial", 12, "bold")).pack(anchor="w", padx=5, pady=5)
+
+        # Canvas y Scrollbar para docentes
+        canvas_docentes = tk.Canvas(frame_principal)
+        scrollbar_docentes = ttk.Scrollbar(frame_principal, orient="vertical", command=canvas_docentes.yview)
+        frame_docentes = tk.Frame(canvas_docentes)
+
+        canvas_docentes.configure(yscrollcommand=scrollbar_docentes.set)
+
+        scrollbar_docentes.pack(side="right", fill="y")
+        canvas_docentes.pack(side="left", fill="both", expand=True)
+        canvas_docentes.create_window((0, 0), window=frame_docentes, anchor="nw")
 
         seleccionados_docentes = {}
+        checkbuttons_docentes = {}  # Para almacenar los Checkbutton de docentes
+
         for docente in self.docentes:
-            var = tk.BooleanVar(value=False)
+            var = tk.BooleanVar(value=docente in self.docentesSeleccionados)
             seleccionados_docentes[docente.codigo] = var
-            if docente in self.docentesSeleccionados:
-                tabla_docentes.insert("", "end", values=(docente.nombre, docente.codigo, "✔"))
-                seleccionados_docentes[docente.codigo].set(not seleccionados_docentes[docente.codigo].get())
-            else:
-                tabla_docentes.insert("", "end", values=(docente.nombre, docente.codigo, ""))
 
-        tabla_docentes.pack(fill="both", expand=True)
+            # Frame para cada fila de docente
+            frame_fila = tk.Frame(frame_docentes)
+            frame_fila.pack(fill="x", padx=5, pady=2)
 
-        seleccionar_todos_docentes_var = tk.BooleanVar(value=False)
+            # Checkbutton para el docente
+            check = tk.Checkbutton(frame_fila, variable=var)
+            check.pack(side="left")
+            checkbuttons_docentes[docente.codigo] = check
+
+            # Etiqueta con nombre y código del docente
+            tk.Label(frame_fila, text=f"{docente.nombre} ({docente.codigo})").pack(side="left", padx=5)
+
+    # Ajustar el área de desplazamiento del Canvas
+        frame_docentes.update_idletasks()
+        canvas_docentes.configure(scrollregion=canvas_docentes.bbox("all"))
+
+    # Checkbutton para seleccionar todos los docentes
+        seleccionar_todos_docentes_var = tk.BooleanVar(value=all(var.get() for var in seleccionados_docentes.values()))
         def toggle_seleccionar_todos_docentes():
             estado = seleccionar_todos_docentes_var.get()
             for var in seleccionados_docentes.values():
                 var.set(estado)
-            for i, item in enumerate(tabla_docentes.get_children()):
-                docente_codigo = tabla_docentes.item(item, "values")[1]
-                tabla_docentes.item(item, values=(self.docentes[i].nombre, docente_codigo, "✔" if seleccionados_docentes[docente_codigo].get() else ""))
 
-        tk.Checkbutton(self.frame_tabla, text="Seleccionar todos los docentes", variable=seleccionar_todos_docentes_var, command=toggle_seleccionar_todos_docentes).pack(pady=5)
-        def actualizar_checkbox_docentes(event):
-            item = tabla_docentes.selection()
-            if not item:
-                return
-            docente_codigo = tabla_docentes.item(item, "values")[1]
-            seleccionados_docentes[docente_codigo].set(not seleccionados_docentes[docente_codigo].get())
-            tabla_docentes.item(item, values=(tabla_docentes.item(item, "values")[0], docente_codigo, "✔" if seleccionados_docentes[docente_codigo].get() else ""))
-            todos_seleccionados = all(var.get() for var in seleccionados_docentes.values())
-            seleccionar_todos_docentes_var.set(todos_seleccionados)
+        tk.Checkbutton(frame_principal, text="Seleccionar todos los docentes", variable=seleccionar_todos_docentes_var, 
+                   command=toggle_seleccionar_todos_docentes).pack(anchor="w", padx=5, pady=5)
 
-        tabla_docentes.bind("<Button-1>", actualizar_checkbox_docentes)
+    # --- Sección de Cursos ---
+        tk.Label(frame_principal, text="Seleccionar Cursos", font=("Arial", 12, "bold")).pack(anchor="w", padx=5, pady=5)
 
-        tk.Label(self.frame_tabla, text="Seleccionar Cursos", font=("Arial", 12, "bold")).pack()
-        columnas_cursos = ("nombre", "codigo", "Seleccionar")
-        tabla_cursos = ttk.Treeview(self.frame_tabla, columns=columnas_cursos, show="headings")
-        for col in columnas_cursos:
-            tabla_cursos.heading(col, text=col)
-            tabla_cursos.column(col, width=150, anchor="center")
+    # Canvas y Scrollbar para cursos
+        canvas_cursos = tk.Canvas(frame_principal)
+        scrollbar_cursos = ttk.Scrollbar(frame_principal, orient="vertical", command=canvas_cursos.yview)
+        frame_cursos = tk.Frame(canvas_cursos)
+
+        canvas_cursos.configure(yscrollcommand=scrollbar_cursos.set)
+
+        scrollbar_cursos.pack(side="right", fill="y")
+        canvas_cursos.pack(side="left", fill="both", expand=True)
+        canvas_cursos.create_window((0, 0), window=frame_cursos, anchor="nw")
 
         seleccionados_cursos = {}
+        checkbuttons_cursos = {}  # Para almacenar los Checkbutton de cursos
+
         for curso in self.cursos:
-            var = tk.BooleanVar(value=False)
+            var = tk.BooleanVar(value=curso in self.cursosSeleccionados)
             seleccionados_cursos[curso.codigo] = var
-            if curso in self.cursosSeleccionados:
-                tabla_cursos.insert("", "end", values=(curso.nombre, curso.codigo, "✔"))
-                seleccionados_cursos[curso.codigo].set(not seleccionados_cursos[curso.codigo].get())
-            else:   
-                tabla_cursos.insert("", "end", values=(curso.nombre, curso.codigo, ""))
 
-        tabla_cursos.pack(fill="both", expand=True)
+            # Frame para cada fila de curso
+            frame_fila = tk.Frame(frame_cursos)
+            frame_fila.pack(fill="x", padx=5, pady=2)
 
-        seleccionar_todos_cursos_var = tk.BooleanVar(value=False)
+            # Checkbutton para el curso
+            check = tk.Checkbutton(frame_fila, variable=var)
+            check.pack(side="left")
+            checkbuttons_cursos[curso.codigo] = check
+
+            # Etiqueta con nombre y código del curso
+            tk.Label(frame_fila, text=f"{curso.nombre} ({curso.codigo})").pack(side="left", padx=5)
+
+    # Ajustar el área de desplazamiento del Canvas
+        frame_cursos.update_idletasks()
+        canvas_cursos.configure(scrollregion=canvas_cursos.bbox("all"))
+
+    # Checkbutton para seleccionar todos los cursos
+        seleccionar_todos_cursos_var = tk.BooleanVar(value=all(var.get() for var in seleccionados_cursos.values()))
         def toggle_seleccionar_todos_cursos():
             estado = seleccionar_todos_cursos_var.get()
             for var in seleccionados_cursos.values():
                 var.set(estado)
-            for i, item in enumerate(tabla_cursos.get_children()):
-                curso_codigo = tabla_cursos.item(item, "values")[1]
-                tabla_cursos.item(item, values=(self.cursos[i].nombre, curso_codigo, "✔" if seleccionados_cursos[curso_codigo].get() else ""))
 
-        tk.Checkbutton(self.frame_tabla, text="Seleccionar todos los cursos", variable=seleccionar_todos_cursos_var, command=toggle_seleccionar_todos_cursos).pack(pady=5)
-
-        def actualizar_checkbox_cursos(event):
-            item = tabla_cursos.selection()
-            if not item:
-                return
-            curso_codigo = tabla_cursos.item(item, "values")[1]
-            seleccionados_cursos[curso_codigo].set(not seleccionados_cursos[curso_codigo].get())
-            tabla_cursos.item(item, values=(tabla_cursos.item(item, "values")[0], curso_codigo, "✔" if seleccionados_cursos[curso_codigo].get() else ""))
-            todos_seleccionados = all(var.get() for var in seleccionados_cursos.values())
-            seleccionar_todos_cursos_var.set(todos_seleccionados)
-
-        tabla_cursos.bind("<Button-1>", actualizar_checkbox_cursos)
+        tk.Checkbutton(frame_principal, text="Seleccionar todos los cursos", variable=seleccionar_todos_cursos_var, 
+                   command=toggle_seleccionar_todos_cursos).pack(anchor="w", padx=5, pady=5)
 
         def guardar_seleccion():
             self.docentesSeleccionados = []
@@ -306,9 +323,9 @@ class InterfazAcademica:
 
             messagebox.showinfo("Éxito", f"Se seleccionaron {len(self.docentesSeleccionados)} docentes y {len(self.cursosSeleccionados)} cursos.")
 
-        self.botonAsignacion = tk.Button(self.frame_superior, text="Guardar selección", bg="#008080", fg="white", font=("Arial", 10, "bold"), command=guardar_seleccion)
-        self.botonAsignacion.pack(side="right", padx=5)
-        
+        self.botonAsignacion = tk.Button(self.frame_superior, text="Guardar selección", bg="#008080", fg="white", font=("Arial", 10, "bold"), 
+              command=guardar_seleccion)
+        self.botonAsignacion.pack(side="right",padx=5)
     def crearHorario(self):
         if not self.cursosSeleccionados:
             self.cursosSeleccionados = self.cursos
