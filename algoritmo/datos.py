@@ -29,3 +29,14 @@ class Docente:
         self.horaSalida = datetime.strptime(horaSalida,"%H:%M").time()
         self.cursos_posibles = cursos_posibles
         pass    
+
+class Estadisticas:
+    def __init__(self):
+        self.conflictosSalon = 0
+        self.conflictosDocente = 0
+        self.conflictosSemestre = 0
+        self.Iteraciones = 0
+        self.TiempoEjecucion = 0
+        self.porcentajeCursos = 0
+        self.espacioMemoria = 0
+        pass

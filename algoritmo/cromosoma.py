@@ -23,7 +23,7 @@ class Cromosoma:
         self.Genes: List[Gen] = []
         self.puntuacion = 100
     
-    def GenerarSolucion(self, cursos: List[Curso], docentes: List[Docente], salones: List[Salon],asignacionManual:List[Gen]):
+    def GenerarSolucion(self, cursos: List[Curso], docentes: List[Docente], salones: List[Salon],asignacionManual:List[Gen],estadisticas:Estadisticas):
         for i, curso in enumerate(cursos):
             # Elegir docente disponible para este curso
             docentes_posibles = [j for j, d in enumerate(docentes) if i in d.cursos_posibles]
@@ -39,9 +39,9 @@ class Cromosoma:
             for gen in asignacionManual:
                 self.Genes[gen.curso].salon = gen.salon
 
-        self.calcularPuntuacion(cursos, docentes, salones)
+        self.calcularPuntuacion(cursos, docentes, salones,estadisticas)
 
-    def calcularPuntuacion(self, cursos: List[Curso], docentes: List[Docente], salones: List[Salon]):
+    def calcularPuntuacion(self, cursos: List[Curso], docentes: List[Docente], salones: List[Salon],estadisticas:Estadisticas):
         self.puntuacion = 100
         horarios_docentes = {}
         horarios_cursos_obligatorios = {}
@@ -53,19 +53,23 @@ class Cromosoma:
             
             # Verificacion Disponibilidad del docente
             if inicio < docente.horaEntrada or fin > docente.horaSalida:
+                estadisticas.conflictosDocente += 1
                 self.puntuacion -= 5
             
             # Verificar traslape docente
             if gen.docente in horarios_docentes:
                 if gen.horario in horarios_docentes[gen.docente]:
+                    estadisticas.conflictosDocente += 1
                     self.puntuacion -= 5
                 else:
                     horarios_docentes[gen.docente].append(gen.horario)
             else:
                 horarios_docentes[gen.docente] = [gen.horario]
+
             #validacion traslape de salones
             if gen.salon in horarios_salones:
                 if gen.horario in horarios_salones[gen.salon]:
+                    estadisticas.conflictosSalon += 1
                     self.puntuacion -= 5
                 else:
                     horarios_salones[gen.salon].append(gen.horario)
@@ -77,6 +81,7 @@ class Cromosoma:
                 key = (curso.carrera, curso.semestre)
                 if key in horarios_cursos_obligatorios:
                     if gen.horario in horarios_cursos_obligatorios[key]:
+                        estadisticas.conflictosSemestre += 1
                         self.puntuacion -= 5
                     else:
                         horarios_cursos_obligatorios[key].append(gen.horario)
@@ -101,7 +106,7 @@ class Cromosoma:
             #print("Curso: ", cursos[gen.curso].nombre, "Docente: ", docentes[gen.docente].nombre, "Salon: ", salones[gen.salon].nombre, "Horario: ", self.HORARIOS[gen.horario])
             print("(",gen.curso,",",gen.docente,",",gen.horario," )")
 
-    def mutacion_random_resetting(self, cursos: List[Curso], docentes: List[Docente], salones: List[Salon], prob_mutacion=0.1):
+    def mutacion_random_resetting(self, cursos: List[Curso], docentes: List[Docente], salones: List[Salon],estadisticas:Estadisticas):
         gentmp:Gen = random.sample(self.Genes,1)[0]
         tipo = random.randint(0,3)
         match tipo:
@@ -115,35 +120,4 @@ class Cromosoma:
                 
             case 3:
                 gentmp.horario = random.randint(0, 8)
-        """
-        for gen in self.Genes:
-            
-            tipo = random.randint(0,3)
-            match tipo:
-                case 1:
-                    docentes_posibles = [j for j, d in enumerate(docentes) if gen.curso in d.cursos_posibles]
-                    if docentes_posibles:  
-                        gen.docente = random.choice(docentes_posibles)
-                
-                case 2:
-                    gen.salon = random.randint(0, len(salones) - 1)
-                
-                case 3:
-                     gen.horario = random.randint(0, 9)  
-            
-            #PRIMERA OPCION
-
-            if random.random() < prob_mutacion:
-                docentes_posibles = [j for j, d in enumerate(docentes) if gen.curso in d.cursos_posibles]
-                if docentes_posibles:  
-                    gen.docente = random.choice(docentes_posibles)
-            
-            # Mutación en salón
-            if random.random() < prob_mutacion:
-                gen.salon = random.randint(0, len(salones) - 1)
-            
-            # Mutación en horario
-            if random.random() < prob_mutacion:
-                gen.horario = random.randint(0, 8)  
-        """
-        self.calcularPuntuacion(cursos, docentes, salones)
+        self.calcularPuntuacion(cursos, docentes, salones,estadisticas)

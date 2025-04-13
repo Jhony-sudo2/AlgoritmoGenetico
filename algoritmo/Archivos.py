@@ -74,6 +74,42 @@ def crerPdf(nombre_archivo, cromosoma:Cromosoma, cursos:List[Curso], docentes, s
     elementos.append(tabla)
     doc.build(elementos)
 
+def crearPDFEstadisticas(estadisticas:Estadisticas):
+    print("generando estadisticas")
+    doc = SimpleDocTemplate("Estadisticas.pdf", pagesize=landscape(letter), rightMargin=30, leftMargin=30, topMargin=30, bottomMargin=30)
+    elementos  = []
+    styles = getSampleStyleSheet()
+    elementos.append(Paragraph("Estadisticas", styles['Heading1']))
+    datos = [[None] * (2) for _ in range(8) ] 
+    datos[0][0] = "Nombre"
+    datos[0][1] = "Valor"
+    datos[1][0] = "Conflictos Salon"
+    datos[1][1] = estadisticas.conflictosSalon
+    datos[2][0] = "Conflictos Docente"
+    datos[2][1] = estadisticas.conflictosDocente
+    datos[3][0] = "Conflictos semestre"
+    datos[3][1] = estadisticas.conflictosSemestre
+    datos[4][0] = "Iteraciones"
+    datos[4][1] = estadisticas.Iteraciones
+    datos[5][0] = "Tiempo Ejecucion"
+    datos[5][1] = estadisticas.TiempoEjecucion
+    datos[6][0] = "Porcentaje Cursos"
+    datos[6][1] = estadisticas.porcentajeCursos
+    datos[7][0] = "Espacio Memoria"
+    datos[7][1] = estadisticas.espacioMemoria
+
+
+    tabla = Table(datos)
+    tabla._argW = [100] * (2)      #ancho  
+    tabla._argH = [40] * (5)   #alto
+    
+
+
+    elementos.append(tabla)
+    doc.build(elementos)
+
+
+
 def crearCSV(nombre_archivo, cromosoma, cursos, docentes, salones):
     with open(nombre_archivo, 'w') as file:
         file.write("Horario,Salon,Cursos,Docentes\n")

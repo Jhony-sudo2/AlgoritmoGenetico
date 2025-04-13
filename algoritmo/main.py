@@ -7,19 +7,20 @@ from algoritmo.Archivos import *
 import matplotlib.pyplot as plt
 
 class AlgoritmoGenetico:
-    def __init__(self,cursos, docentes, salones,asignacionesManuales):
+    def __init__(self,cursos, docentes, salones,asignacionesManuales,NoPoblacion,generacionesMaxima):
         self.cursos:List[Curso] = cursos
         self.docentes:List[Docente] = docentes
         self.salones:List[Salon] = salones
         self.asignacionesManuales = asignacionesManuales
         self.Cromosomas:Cromosoma = []
-        self.NoPoblacion:int = 50
+        self.NoPoblacion:int = NoPoblacion
         self.seleccionados:List[Cromosoma] = []
         self.poblacionesFinales:List[Cromosoma] = []
-        self.generacionesMaxima = 500
+        self.generacionesMaxima = generacionesMaxima
         self.opcionMejor:Cromosoma
         self.promedios = []
         self.generaciones = []
+        self.estadisticas:Estadisticas = Estadisticas()
 
     def Iniciar(self):
         continuar = True
@@ -33,30 +34,21 @@ class AlgoritmoGenetico:
         self.mejorOpcion()
         self.graficar()
         crerPdf("horario.pdf",self.opcionMejor,self.cursos,self.docentes,self.salones)
+        crearPDFEstadisticas(self.estadisticas)
         crearCSV("horario.csv",self.opcionMejor,self.cursos,self.docentes,self.salones)
+        return self.opcionMejor
 
     def generarPoblacionInicial(self):
         for i in range(self.NoPoblacion):
             # Generar un nuevo cromosoma)
             cromosoma = Cromosoma()
-            cromosoma.GenerarSolucion(self.cursos, self.docentes, self.salones,self.asignacionesManuales)
+            cromosoma.GenerarSolucion(self.cursos, self.docentes, self.salones,self.asignacionesManuales,self.estadisticas)
             self.Cromosomas.append(cromosoma)
         pass
 
     def Seleccion(self):
         #SELECCIONANDO POBLACION METODO: seleccion por torneo
-        """
-        print("RANGO, ", str(self.NoPoblacion/2+1))
-        for i in range(int(self.NoPoblacion/2)):
-            if len(self.seleccionados) < (self.NoPoblacion/2):
-                competidores = random.sample(self.Cromosomas, 3)
-            else:
-                 print("longitud seleccionados: ",len(self.seleccionados))
-                 competidores = random.sample(self.seleccionados, 3)
-            ganador = max(competidores, key=lambda x: x.puntuacion)
-            print(f"Torneo: {[c.puntuacion for c in competidores]} -> Ganador: {ganador.puntuacion}")
-            self.seleccionados.append(ganador)
-        """
+
         if self.seleccionados:
             self.Cromosomas = []
             self.Cromosomas = self.seleccionados
@@ -93,14 +85,14 @@ class AlgoritmoGenetico:
                 hijo2.Genes.append(Gen(padre1.Genes[i].curso, padre1.Genes[i].docente,
                                   padre1.Genes[i].salon, padre1.Genes[i].horario))
     
-        hijo1.calcularPuntuacion(self.cursos, self.docentes, self.salones)
-        hijo2.calcularPuntuacion(self.cursos, self.docentes, self.salones)
+        hijo1.calcularPuntuacion(self.cursos, self.docentes, self.salones,self.estadisticas)
+        hijo2.calcularPuntuacion(self.cursos, self.docentes, self.salones,self.estadisticas)
         return hijo1, hijo2
     
 
     def Mutacion(self):
         for cromosoma in self.seleccionados:
-            cromosoma.mutacion_random_resetting(self.cursos, self.docentes, self.salones, 0.1)
+            cromosoma.mutacion_random_resetting(self.cursos, self.docentes, self.salones,self.estadisticas)
         pass
     
     

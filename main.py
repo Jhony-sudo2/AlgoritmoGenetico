@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
 from algoritmo import Archivos
-from algoritmo.cromosoma import Gen
+from algoritmo.cromosoma import Cromosoma, Gen
 from algoritmo.datos import *
 from algoritmo.main import AlgoritmoGenetico
 
@@ -12,7 +12,8 @@ class InterfazAcademica:
         self.AsignacionDocentes = []
         self.cursosSeleccionados = []
         self.docentesSeleccionados = []
-
+        self.NoPoblacion = 20
+        self.Generaciones = 50
         self.salones = [
             Salon("Aula Magna 1", 120),
             Salon("Aula Magna 2", 100),
@@ -138,13 +139,26 @@ class InterfazAcademica:
         columnas = ["Poblacion","Generaciones Maxima"]
         item.columm = columnas
         entradas = {}
-        for col in columnas:
+        for i,col in enumerate(columnas):
             tk.Label(self.frame_tabla, text=f"{col}:").pack()
             entrada = tk.Entry(self.frame_tabla)
             entrada.pack()
+            if i == 0:
+                entrada.insert(0,self.NoPoblacion)
+            else:
+                entrada.insert(0,self.Generaciones)
             entradas[col] = entrada
         
+        def guardar():
+            valores = tuple(entradas[col].get() for col in columnas)
+            if valores[0].isdigit() and valores[1].isdigit():
+                self.NoPoblacion = int(valores[0])
+                self.Generaciones = int(valores[1])
+            else:
+                messagebox.showwarning("Error", "Por favor ingrese numeros entero")
 
+            print("poblacion: ",self.NoPoblacion, " generaciones : ", self.Generaciones)
+        tk.Button(self.frame_tabla, text="Guardar", command=guardar).pack(pady=10)
 
     def mostrar_asignacion_manual(self):
         ventana = tk.Toplevel(self.root)
@@ -204,7 +218,11 @@ class InterfazAcademica:
         for docente in self.docentes:
             var = tk.BooleanVar(value=False)
             seleccionados_docentes[docente.codigo] = var
-            tabla_docentes.insert("", "end", values=(docente.nombre, docente.codigo, ""))
+            if docente in self.docentesSeleccionados:
+                tabla_docentes.insert("", "end", values=(docente.nombre, docente.codigo, "✔"))
+                seleccionados_docentes[docente.codigo].set(not seleccionados_docentes[docente.codigo].get())
+            else:
+                tabla_docentes.insert("", "end", values=(docente.nombre, docente.codigo, ""))
 
         tabla_docentes.pack(fill="both", expand=True)
 
@@ -241,7 +259,11 @@ class InterfazAcademica:
         for curso in self.cursos:
             var = tk.BooleanVar(value=False)
             seleccionados_cursos[curso.codigo] = var
-            tabla_cursos.insert("", "end", values=(curso.nombre, curso.codigo, ""))
+            if curso in self.cursosSeleccionados:
+                tabla_cursos.insert("", "end", values=(curso.nombre, curso.codigo, "✔"))
+                seleccionados_cursos[curso.codigo].set(not seleccionados_cursos[curso.codigo].get())
+            else:   
+                tabla_cursos.insert("", "end", values=(curso.nombre, curso.codigo, ""))
 
         tabla_cursos.pack(fill="both", expand=True)
 
@@ -269,6 +291,9 @@ class InterfazAcademica:
         tabla_cursos.bind("<Button-1>", actualizar_checkbox_cursos)
 
         def guardar_seleccion():
+            self.docentesSeleccionados = []
+            self.cursosSeleccionados = []
+            self.AsignacionDocentes = []
             self.docentesSeleccionados = [docente for docente in self.docentes if seleccionados_docentes[docente.codigo].get()]
             self.cursosSeleccionados = [curso for curso in self.cursos if seleccionados_cursos[curso.codigo].get()]
 
@@ -289,10 +314,9 @@ class InterfazAcademica:
             self.cursosSeleccionados = self.cursos
         if not self.docentesSeleccionados:
             self.docentesSeleccionados = self.docentes
-        algoritmo = AlgoritmoGenetico(self.cursos,self.docentes,self.salones,self.AsignacionDocentes)
-        algoritmo.Iniciar()
-        self.cursosSeleccionados = []
-        self.docentesSeleccionados = []
+        algoritmo = AlgoritmoGenetico(self.cursos,self.docentes,self.salones,self.AsignacionDocentes,self.NoPoblacion,self.Generaciones)
+        self.AsignacionDocentes = algoritmo.Iniciar()
+        self.mostrar_horarios()
     def limpiar_panel(self):
         for widget in self.frame_tabla.winfo_children():
             widget.destroy()
@@ -312,14 +336,19 @@ class InterfazAcademica:
             tabla_actual.column(col, width=100, anchor="center")
         
         if not self.asignacion:
-            for objeto in datos:
-                if isinstance(objeto, Gen):
-                    valores = (objeto.horario, self.docentesSeleccionados[objeto.docente].nombre, self.cursosSeleccionados[objeto.curso].nombre, self.salones[objeto.salon].nombre)
-                else:   
-                    valores = [getattr(objeto, col) for col in columnas if col not in ["Horario", "Docente", "Curso", "Salón"]]
-                    if len(valores) != len(columnas):
-                        valores = objeto
-                tabla_actual.insert("", "end", values=valores)
+            if isinstance(datos,Cromosoma):
+                for gen in datos.Genes:
+                    valorestmp = (gen.horario, self.docentesSeleccionados[gen.docente].nombre, self.cursosSeleccionados[gen.curso].nombre, self.salones[gen.salon].nombre)
+                    tabla_actual.insert("", "end", values=valorestmp)
+            else:
+                for objeto in datos:
+                    if isinstance(objeto, Gen):
+                        valores = (objeto.horario, self.docentesSeleccionados[objeto.docente].nombre, self.cursosSeleccionados[objeto.curso].nombre, self.salones[objeto.salon].nombre)
+                    else:   
+                        valores = [getattr(objeto, col) for col in columnas if col not in ["Horario", "Docente", "Curso", "Salón"]]
+                        if len(valores) != len(columnas):
+                            valores = objeto
+                    tabla_actual.insert("", "end", values=valores)
             tabla_actual.pack(fill="both", expand=True)
         else:
             for docente in datos:

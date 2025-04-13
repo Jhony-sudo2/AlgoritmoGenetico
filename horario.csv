@@ -1,41 +1,41 @@
 Horario,Salon,Cursos,Docentes
-15:20-16:10,Aula 301,Programación I,Ana Pérez
-16:10-17:00,Laboratorio de Informática 1,Programación II,Ana Pérez
-17:00-17:50,Aula Magna 2,Bases de Datos,Ana Pérez
-14:30-15:20,Sala de Proyecciones 2,Algoritmos Avanzados,Ana Pérez
-18:40-19:30,Laboratorio de Física 2,Inteligencia Artificial,Juan Gómez
-19:30-20:20,Laboratorio de Biología 2,Redes de Computadoras,Juan Gómez
-16:10-17:00,Aula 401,Sistemas Operativos,María López
-20:20-21:10,Aula 402,Ingeniería de Software,Juan Gómez
-17:50-18:40,Aula 302,Ciberseguridad,María López
-18:40-19:30,Sala de Proyecciones 2,Proyectos de TI,María López
-14:30-15:20,Laboratorio de Física 2,Cálculo Estructural,Carlos Ruiz
-16:10-17:00,Laboratorio de Biología 2,Mecánica de Suelos,Carlos Ruiz
-13:40-14:30,Sala de Proyecciones 2,Diseño de Puentes,Carlos Ruiz
-15:20-16:10,Laboratorio de Informática 2,Hidráulica,Carlos Ruiz
-17:50-18:40,Laboratorio de Informática 2,Construcción Sostenible,Elena Martínez
-19:30-20:20,Sala de Proyecciones 2,Geotecnia,Elena Martínez
-17:00-17:50,Sala de Proyecciones 2,Topografía,Elena Martínez
-19:30-20:20,Sala de Conferencias 1,Materiales de Construcción,Pedro Sánchez
-18:40-19:30,Aula 301,Gestión de Proyectos,Pedro Sánchez
-20:20-21:10,Aula 401,Diseño Sísmico,Pedro Sánchez
-15:20-16:10,Aula Magna 2,Biología Celular,Laura Fernández
-17:50-18:40,Aula Magna 2,Genética,Laura Fernández
-17:00-17:50,Laboratorio de Informática 1,Ecología,Laura Fernández
-17:50-18:40,Laboratorio de Biología 1,Microbiología,Miguel Torres
-20:20-21:10,Laboratorio de Física 1,Biotecnología,Miguel Torres
-16:10-17:00,Laboratorio de Química 1,Fisiología Vegetal,Laura Fernández
-18:40-19:30,Aula 401,Zoología,Miguel Torres
-17:00-17:50,Laboratorio de Química 2,Bioquímica,Miguel Torres
-14:30-15:20,Aula 301,Evolución,Sofía Ramírez
-13:40-14:30,Sala de Conferencias 2,Biología Marina,Sofía Ramírez
-17:00-17:50,Laboratorio de Biología 1,Introducción a la Administración,Andrés Vargas
-17:50-18:40,Laboratorio de Química 1,Contabilidad Básica,Andrés Vargas
-16:10-17:00,Laboratorio de Física 1,Marketing,Andrés Vargas
-19:30-20:20,Aula Magna 1,Finanzas Corporativas,Andrés Vargas
-16:10-17:00,Aula 402,Gestión de Recursos Humanos,Clara Díaz
-18:40-19:30,Laboratorio de Química 2,Economía Empresarial,Andrés Vargas
-20:20-21:10,Laboratorio de Química 1,Estrategia Empresarial,Clara Díaz
-15:20-16:10,Laboratorio de Física 2,Emprendimiento,Clara Díaz
-18:40-19:30,Laboratorio de Física 1,Comportamiento Organizacional,Clara Díaz
-15:20-16:10,Laboratorio de Física 1,Logística y Cadena de Suministro,Diego Morales
+20:20-21:10,Sala de Conferencias 2,Programación I,Ana Pérez
+17:50-18:40,Laboratorio de Informática 1,Programación II,Ana Pérez
+15:20-16:10,Aula 301,Bases de Datos,Ana Pérez
+14:30-15:20,Sala de Conferencias 2,Algoritmos Avanzados,Ana Pérez
+18:40-19:30,Laboratorio de Informática 1,Inteligencia Artificial,Juan Gómez
+17:00-17:50,Laboratorio de Informática 2,Redes de Computadoras,María López
+14:30-15:20,Sala de Proyecciones 1,Sistemas Operativos,María López
+13:40-14:30,Laboratorio de Biología 1,Ingeniería de Software,Juan Gómez
+19:30-20:20,Laboratorio de Química 2,Ciberseguridad,María López
+17:50-18:40,Aula Magna 2,Proyectos de TI,María López
+14:30-15:20,Aula Magna 1,Cálculo Estructural,Carlos Ruiz
+19:30-20:20,Aula Magna 1,Mecánica de Suelos,Carlos Ruiz
+16:10-17:00,Sala de Conferencias 1,Diseño de Puentes,Carlos Ruiz
+18:40-19:30,Laboratorio de Física 1,Hidráulica,Elena Martínez
+17:00-17:50,Laboratorio de Química 1,Construcción Sostenible,Elena Martínez
+15:20-16:10,Laboratorio de Química 2,Geotecnia,Pedro Sánchez
+17:50-18:40,Sala de Conferencias 2,Topografía,Elena Martínez
+17:00-17:50,Laboratorio de Química 2,Materiales de Construcción,Pedro Sánchez
+17:50-18:40,Laboratorio de Química 1,Gestión de Proyectos,Pedro Sánchez
+17:50-18:40,Aula 402,Diseño Sísmico,Pedro Sánchez
+15:20-16:10,Laboratorio de Química 1,Biología Celular,Laura Fernández
+19:30-20:20,Aula 502,Genética,Laura Fernández
+16:10-17:00,Aula 501,Ecología,Laura Fernández
+14:30-15:20,Aula 501,Microbiología,Laura Fernández
+17:00-17:50,Aula 501,Biotecnología,Laura Fernández
+13:40-14:30,Aula 401,Fisiología Vegetal,Miguel Torres
+20:20-21:10,Laboratorio de Informática 1,Zoología,Sofía Ramírez
+20:20-21:10,Laboratorio de Química 2,Bioquímica,Miguel Torres
+17:00-17:50,Aula 402,Evolución,Miguel Torres
+13:40-14:30,Sala de Proyecciones 1,Biología Marina,Sofía Ramírez
+17:50-18:40,Laboratorio de Física 2,Introducción a la Administración,Andrés Vargas
+16:10-17:00,Aula 402,Contabilidad Básica,Andrés Vargas
+18:40-19:30,Sala de Conferencias 2,Marketing,Andrés Vargas
+19:30-20:20,Laboratorio de Biología 1,Finanzas Corporativas,Clara Díaz
+20:20-21:10,Laboratorio de Química 1,Gestión de Recursos Humanos,Andrés Vargas
+17:50-18:40,Laboratorio de Física 1,Economía Empresarial,Diego Morales
+20:20-21:10,Laboratorio de Física 2,Estrategia Empresarial,Clara Díaz
+13:40-14:30,Aula Magna 1,Emprendimiento,Clara Díaz
+15:20-16:10,Aula Magna 1,Comportamiento Organizacional,Clara Díaz
+15:20-16:10,Aula 402,Logística y Cadena de Suministro,Diego Morales
