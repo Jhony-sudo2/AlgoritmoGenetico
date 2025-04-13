@@ -7,10 +7,11 @@ from algoritmo.Archivos import *
 import matplotlib.pyplot as plt
 
 class AlgoritmoGenetico:
-    def __init__(self,cursos, docentes, salones):
+    def __init__(self,cursos, docentes, salones,asignacionesManuales):
         self.cursos:List[Curso] = cursos
         self.docentes:List[Docente] = docentes
         self.salones:List[Salon] = salones
+        self.asignacionesManuales = asignacionesManuales
         self.Cromosomas:Cromosoma = []
         self.NoPoblacion:int = 50
         self.seleccionados:List[Cromosoma] = []
@@ -38,7 +39,7 @@ class AlgoritmoGenetico:
         for i in range(self.NoPoblacion):
             # Generar un nuevo cromosoma)
             cromosoma = Cromosoma()
-            cromosoma.GenerarSolucion(self.cursos, self.docentes, self.salones)
+            cromosoma.GenerarSolucion(self.cursos, self.docentes, self.salones,self.asignacionesManuales)
             self.Cromosomas.append(cromosoma)
         pass
 

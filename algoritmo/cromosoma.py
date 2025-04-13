@@ -2,6 +2,14 @@ import random
 from typing import List
 
 from algoritmo.datos import *
+class Gen:
+    def __init__(self,curso:int,docente:int,salon:int,horario:int):
+        self.curso:int = curso
+        self.docente:int = docente
+        self.salon:int = salon
+        self.horario:int = horario
+        pass
+
 class Cromosoma:
     HORARIOS = [
         "13:40-14:30", "14:30-15:20", "15:20-16:10", "16:10-17:00", "17:00-17:50",
@@ -14,8 +22,8 @@ class Cromosoma:
     def __init__(self):
         self.Genes: List[Gen] = []
         self.puntuacion = 100
-
-    def GenerarSolucion(self, cursos: List[Curso], docentes: List[Docente], salones: List[Salon]):
+    
+    def GenerarSolucion(self, cursos: List[Curso], docentes: List[Docente], salones: List[Salon],asignacionManual:List[Gen]):
         for i, curso in enumerate(cursos):
             # Elegir docente disponible para este curso
             docentes_posibles = [j for j, d in enumerate(docentes) if i in d.cursos_posibles]
@@ -27,6 +35,10 @@ class Cromosoma:
             gen = Gen(i, docente, salon, horario)
             self.Genes.append(gen)
             #print("Curso: ", curso.nombre, "Docente: ", docentes[docente].nombre, "Salon: ", salones[salon].nombre, "Horario: ", self.HORARIOS[horario])
+        if asignacionManual:
+            for gen in asignacionManual:
+                self.Genes[gen.curso].salon = gen.salon
+
         self.calcularPuntuacion(cursos, docentes, salones)
 
     def calcularPuntuacion(self, cursos: List[Curso], docentes: List[Docente], salones: List[Salon]):
@@ -135,10 +147,3 @@ class Cromosoma:
                 gen.horario = random.randint(0, 8)  
         """
         self.calcularPuntuacion(cursos, docentes, salones)
-class Gen:
-    def __init__(self,curso:int,docente:int,salon:int,horario:int):
-        self.curso:int = curso
-        self.docente:int = docente
-        self.salon:int = salon
-        self.horario:int = horario
-        pass

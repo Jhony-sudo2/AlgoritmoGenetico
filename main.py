@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
 from algoritmo import Archivos
+from algoritmo.cromosoma import Gen
 from algoritmo.datos import *
 from algoritmo.main import AlgoritmoGenetico
 
@@ -11,7 +12,6 @@ class InterfazAcademica:
         self.AsignacionDocentes = []
         self.cursosSeleccionados = []
         self.docentesSeleccionados = []
-        self.salonesSeleccionados = []
 
         self.salones = [
             Salon("Aula Magna 1", 120),
@@ -36,7 +36,6 @@ class InterfazAcademica:
             Salon("Laboratorio de Química 2", 25)
         ]
         self.cursos = [
-            # Ingeniería en Sistemas (códigos SYS101 a SYS110)
             Curso("Programación I", "SYS101", "Ingeniería en Sistemas", "1", "A", True),
             Curso("Programación II", "SYS102", "Ingeniería en Sistemas", "2", "B", True),
             Curso("Bases de Datos", "SYS103", "Ingeniería en Sistemas", "3", "A", True),
@@ -47,8 +46,6 @@ class InterfazAcademica:
             Curso("Ingeniería de Software", "SYS108", "Ingeniería en Sistemas", "4", "A", True),
             Curso("Ciberseguridad", "SYS109", "Ingeniería en Sistemas", "5", "B", False),
             Curso("Proyectos de TI", "SYS110", "Ingeniería en Sistemas", "6", "C", True),
-
-            # Ingeniería Civil (códigos CIV101 a CIV110)
             Curso("Cálculo Estructural", "CIV101", "Ingeniería Civil", "1", "A", True),
             Curso("Mecánica de Suelos", "CIV102", "Ingeniería Civil", "2", "B", True),
             Curso("Diseño de Puentes", "CIV103", "Ingeniería Civil", "3", "A", False),
@@ -59,8 +56,6 @@ class InterfazAcademica:
             Curso("Materiales de Construcción", "CIV108", "Ingeniería Civil", "1", "B", True),
             Curso("Gestión de Proyectos", "CIV109", "Ingeniería Civil", "5", "C", True),
             Curso("Diseño Sísmico", "CIV110", "Ingeniería Civil", "6", "A", False),
-
-            # Ciencias Biológicas (códigos BIO101 a BIO110)
             Curso("Biología Celular", "BIO101", "Ciencias Biológicas", "1", "A", True),
             Curso("Genética", "BIO102", "Ciencias Biológicas", "2", "B", True),
             Curso("Ecología", "BIO103", "Ciencias Biológicas", "3", "A", False),
@@ -71,8 +66,6 @@ class InterfazAcademica:
             Curso("Bioquímica", "BIO108", "Ciencias Biológicas", "4", "A", True),
             Curso("Evolución", "BIO109", "Ciencias Biológicas", "5", "B", False),
             Curso("Biología Marina", "BIO110", "Ciencias Biológicas", "6", "C", True),
-
-            # Administración de Empresas (códigos ADM101 a ADM110)
             Curso("Introducción a la Administración", "ADM101", "Administración de Empresas", "1", "A", True),
             Curso("Contabilidad Básica", "ADM102", "Administración de Empresas", "2", "B", True),
             Curso("Marketing", "ADM103", "Administración de Empresas", "3", "A", True),
@@ -85,19 +78,15 @@ class InterfazAcademica:
             Curso("Logística y Cadena de Suministro", "ADM110", "Administración de Empresas", "6", "C", True)
         ]
         self.docentes = [
-            # Docentes de Ingeniería en Sistemas
             Docente("Ana Pérez", "DOC001", "14:00", "18:00", [0, 1, 2, 3, 4, 5]),
             Docente("Juan Gómez", "DOC002", "18:00", "22:00", [3, 4, 5, 6, 7, 8]),
             Docente("María López", "DOC003", "14:00", "20:00", [5, 6, 7, 8, 9]),
-            # Docentes de Ingeniería Civil
             Docente("Carlos Ruiz", "DOC004", "13:00", "17:00", [10, 11, 12, 13, 14, 15]),
             Docente("Elena Martínez", "DOC005", "17:00", "22:00", [12, 13, 14, 15, 16, 17]),
             Docente("Pedro Sánchez", "DOC006", "14:00", "22:00", [15, 16, 17, 18, 19]),
-            # Docentes de Ciencias Biológicas
             Docente("Laura Fernández", "DOC007", "14:00", "19:00", [20, 21, 22, 23, 24, 25]),
             Docente("Miguel Torres", "DOC008", "17:00", "22:00", [23, 24, 25, 26, 27, 28]),
             Docente("Sofía Ramírez", "DOC009", "13:00", "16:00", [25, 26, 27, 28, 29]),
-            # Docentes de Administración de Empresas
             Docente("Andrés Vargas", "DOC010", "16:00", "22:00", [30, 31, 32, 33, 34, 35]),
             Docente("Clara Díaz", "DOC011", "13:00", "22:00", [33, 34, 35, 36, 37, 38]),
             Docente("Diego Morales", "DOC012", "14:00", "18:00", [35, 36, 37, 38, 39])
@@ -125,7 +114,11 @@ class InterfazAcademica:
         self.menu_bar.add_command(label="Docentes", command=self.mostrar_docentes)
         self.menu_bar.add_command(label="Asignación Docentes", command=self.mostrar_asignacion)
         self.menu_bar.add_command(label="Salones", command=self.mostrar_salones)
+        self.menu_bar.add_command(label="Asignación Manual", command=self.mostrar_asignacion_manual)
+        self.menu_bar.add_command(label="Seleccion ", command=self.seleccion)
         self.menu_bar.add_command(label="Generación Horario", command=self.mostrar_horarios)
+        self.menu_bar.add_command(label="Algoritmo", command=self.configurarAlgoritmo)
+
 
         self.frame_superior = tk.Frame(self.root)
         self.frame_superior.pack(fill="x", padx=5, pady=5)
@@ -136,26 +129,73 @@ class InterfazAcademica:
         self.tabla_actual = None
         self.boton_nuevo = None
         self.botonExportacion = None
-
+        self.botonCrear = None
+        self.botonAsignacion = None
         self.mostrar_docentes()
+    def configurarAlgoritmo(self):
+        self.limpiar_panel()
+        item = ttk.Treeview(self.frame_tabla)
+        columnas = ["Poblacion","Generaciones Maxima"]
+        item.columm = columnas
+        entradas = {}
+        for col in columnas:
+            tk.Label(self.frame_tabla, text=f"{col}:").pack()
+            entrada = tk.Entry(self.frame_tabla)
+            entrada.pack()
+            entradas[col] = entrada
+        
 
-    def crearHorario(self):
+
+    def mostrar_asignacion_manual(self):
         ventana = tk.Toplevel(self.root)
-        ventana.title("Seleccionar Docentes y Cursos")
-        ventana.geometry("800x600")
+        ventana.title("Asignación Manual de Curso a Salón")
+        ventana.geometry("400x200")
 
-        frame_superior = tk.Frame(ventana)
-        frame_superior.pack(fill="x", padx=5, pady=5)
+        frame = tk.Frame(ventana)
+        frame.pack(fill="both", expand=True, padx=10, pady=10)
 
-        frame_docentes = tk.Frame(ventana, bg="lightgray")
-        frame_docentes.pack(fill="both", expand=True, padx=5, pady=5)
+        tk.Label(frame, text="Seleccionar Curso:", font=("Arial", 10, "bold")).pack(pady=5)
+        cursos_nombres = [curso.nombre for curso in self.cursosSeleccionados]
+        curso_combobox = ttk.Combobox(frame, values=cursos_nombres, state="readonly")
+        curso_combobox.pack(pady=5)
+        curso_combobox.set(cursos_nombres[0] if cursos_nombres else "")
 
-        frame_cursos = tk.Frame(ventana, bg="lightgray")
-        frame_cursos.pack(fill="both", expand=True, padx=5, pady=5)
+        tk.Label(frame, text="Seleccionar Salón:", font=("Arial", 10, "bold")).pack(pady=5)
+        salones_nombres = [salon.nombre for salon in self.salones]
+        salon_combobox = ttk.Combobox(frame, values=salones_nombres, state="readonly")
+        salon_combobox.pack(pady=5)
+        salon_combobox.set(salones_nombres[0] if salones_nombres else "")
 
-        tk.Label(frame_docentes, text="Seleccionar Docentes", font=("Arial", 12, "bold")).pack()
+        def guardar_asignacion():
+            curso_nombre = curso_combobox.get()
+            salon_nombre = salon_combobox.get()
+
+            if not curso_nombre or not salon_nombre:
+                messagebox.showwarning("Advertencia", "Debe seleccionar un curso y un salón.")
+                return
+            curso_seleccionado = 0
+            salon_seleccionado = 0
+            for i,curso in enumerate(self.cursosSeleccionados):
+                if curso.nombre == curso_nombre:
+                    curso_seleccionado = i
+            for i,salon in enumerate(self.salones):
+                if salon.nombre == salon_nombre:
+                    salon_seleccionado = i
+            
+            asignacion = Gen(curso_seleccionado,0,salon_seleccionado,0)
+            self.AsignacionDocentes.append(asignacion)
+
+            messagebox.showinfo("Éxito", f"Curso '{curso_nombre}' asignado al salón '{salon_nombre}' correctamente.")
+            ventana.destroy()
+
+            self.mostrar_horarios()
+
+        tk.Button(frame, text="Guardar Asignación", bg="#008080", fg="white", font=("Arial", 10, "bold"), command=guardar_asignacion).pack(pady=10)
+
+    def seleccion(self):
+        self.limpiar_panel()
         columnas_docentes = ("nombre", "codigo", "Seleccionar")
-        tabla_docentes = ttk.Treeview(frame_docentes, columns=columnas_docentes, show="headings")
+        tabla_docentes = ttk.Treeview(self.frame_tabla, columns=columnas_docentes, show="headings")
         for col in columnas_docentes:
             tabla_docentes.heading(col, text=col)
             tabla_docentes.column(col, width=150, anchor="center")
@@ -177,8 +217,7 @@ class InterfazAcademica:
                 docente_codigo = tabla_docentes.item(item, "values")[1]
                 tabla_docentes.item(item, values=(self.docentes[i].nombre, docente_codigo, "✔" if seleccionados_docentes[docente_codigo].get() else ""))
 
-        tk.Checkbutton(frame_docentes, text="Seleccionar todos los docentes", variable=seleccionar_todos_docentes_var, command=toggle_seleccionar_todos_docentes).pack(pady=5)
-
+        tk.Checkbutton(self.frame_tabla, text="Seleccionar todos los docentes", variable=seleccionar_todos_docentes_var, command=toggle_seleccionar_todos_docentes).pack(pady=5)
         def actualizar_checkbox_docentes(event):
             item = tabla_docentes.selection()
             if not item:
@@ -191,9 +230,9 @@ class InterfazAcademica:
 
         tabla_docentes.bind("<Button-1>", actualizar_checkbox_docentes)
 
-        tk.Label(frame_cursos, text="Seleccionar Cursos", font=("Arial", 12, "bold")).pack()
+        tk.Label(self.frame_tabla, text="Seleccionar Cursos", font=("Arial", 12, "bold")).pack()
         columnas_cursos = ("nombre", "codigo", "Seleccionar")
-        tabla_cursos = ttk.Treeview(frame_cursos, columns=columnas_cursos, show="headings")
+        tabla_cursos = ttk.Treeview(self.frame_tabla, columns=columnas_cursos, show="headings")
         for col in columnas_cursos:
             tabla_cursos.heading(col, text=col)
             tabla_cursos.column(col, width=150, anchor="center")
@@ -215,7 +254,7 @@ class InterfazAcademica:
                 curso_codigo = tabla_cursos.item(item, "values")[1]
                 tabla_cursos.item(item, values=(self.cursos[i].nombre, curso_codigo, "✔" if seleccionados_cursos[curso_codigo].get() else ""))
 
-        tk.Checkbutton(frame_cursos, text="Seleccionar todos los cursos", variable=seleccionar_todos_cursos_var, command=toggle_seleccionar_todos_cursos).pack(pady=5)
+        tk.Checkbutton(self.frame_tabla, text="Seleccionar todos los cursos", variable=seleccionar_todos_cursos_var, command=toggle_seleccionar_todos_cursos).pack(pady=5)
 
         def actualizar_checkbox_cursos(event):
             item = tabla_cursos.selection()
@@ -242,12 +281,18 @@ class InterfazAcademica:
 
             messagebox.showinfo("Éxito", f"Se seleccionaron {len(self.docentesSeleccionados)} docentes y {len(self.cursosSeleccionados)} cursos.")
 
-            algoritmo = AlgoritmoGenetico(self.cursosSeleccionados, self.docentesSeleccionados, self.salones)
-            ventana.destroy()
-            self.limpiar_panel()
-            resultado = algoritmo.Iniciar()
-        tk.Button(frame_superior, text="Guardar selección", bg="#008080", fg="white", font=("Arial", 10, "bold"), command=guardar_seleccion).pack(side="right", padx=5)
-
+        self.botonAsignacion = tk.Button(self.frame_superior, text="Guardar selección", bg="#008080", fg="white", font=("Arial", 10, "bold"), command=guardar_seleccion)
+        self.botonAsignacion.pack(side="right", padx=5)
+        
+    def crearHorario(self):
+        if not self.cursosSeleccionados:
+            self.cursosSeleccionados = self.cursos
+        if not self.docentesSeleccionados:
+            self.docentesSeleccionados = self.docentes
+        algoritmo = AlgoritmoGenetico(self.cursos,self.docentes,self.salones,self.AsignacionDocentes)
+        algoritmo.Iniciar()
+        self.cursosSeleccionados = []
+        self.docentesSeleccionados = []
     def limpiar_panel(self):
         for widget in self.frame_tabla.winfo_children():
             widget.destroy()
@@ -255,17 +300,25 @@ class InterfazAcademica:
             self.boton_nuevo.destroy()
         if self.botonExportacion:
             self.botonExportacion.destroy()
+        if self.botonCrear:
+            self.botonCrear.destroy()
+        if self.botonAsignacion:
+            self.botonAsignacion.destroy()
 
     def crear_tabla(self, tabla_actual, frame_tabla, columnas, datos):
         tabla_actual = ttk.Treeview(frame_tabla, columns=columnas, show="headings")
         for col in columnas:
             tabla_actual.heading(col, text=col)
             tabla_actual.column(col, width=100, anchor="center")
+        
         if not self.asignacion:
             for objeto in datos:
-                valores = [getattr(objeto, col) for col in columnas if col not in ["Horario", "Docente", "Curso", "Salón"]]
-                if len(valores) != len(columnas):  # Para el caso de horarios
-                    valores = objeto  # Los datos ya vienen como tupla
+                if isinstance(objeto, Gen):
+                    valores = (objeto.horario, self.docentesSeleccionados[objeto.docente].nombre, self.cursosSeleccionados[objeto.curso].nombre, self.salones[objeto.salon].nombre)
+                else:   
+                    valores = [getattr(objeto, col) for col in columnas if col not in ["Horario", "Docente", "Curso", "Salón"]]
+                    if len(valores) != len(columnas):
+                        valores = objeto
                 tabla_actual.insert("", "end", values=valores)
             tabla_actual.pack(fill="both", expand=True)
         else:
@@ -361,9 +414,9 @@ class InterfazAcademica:
         self.limpiar_panel()
         columnas = ("Horario", "Docente", "Curso", "Salón")
         self.tabla_actual = self.crear_tabla(self.tabla_actual, self.frame_tabla, columnas, self.AsignacionDocentes)
-        self.boton_nuevo = tk.Button(self.frame_superior, text="Nuevo", bg="#008080", fg="white", font=("Arial", 10, "bold"),
+        self.botonCrear = tk.Button(self.frame_superior, text="Crear", bg="#008080", fg="white", font=("Arial", 10, "bold"),
                                      command=lambda: self.crearHorario())
-        self.boton_nuevo.pack(side="right", padx=5)
+        self.botonCrear.pack(side="right", padx=5)
 
 if __name__ == "__main__":
     root = tk.Tk()
