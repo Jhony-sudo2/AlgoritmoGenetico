@@ -9,16 +9,16 @@ class Salon:
         pass
 
 class Curso:
-    def __init__(self,nombre:str,codigo:str,carrera:str,semestre:str,seccion:str,tipo:bool):
+    def __init__(self,nombre:str,codigo:str,carrera:str,semestre:str,seccion:str,tipo:str):
         self.nombre:str = nombre
         self.codigo:str = codigo
         self.carrera:str = carrera
         self.seccion:str = seccion
-        self.semestre:str = semestre
-        if(tipo == True):
-            self.tipo:str = "Obligatorio"
-        else:
-            self.tipo:str = "Optativo"
+        self.semestre:str = int(semestre)
+        if(tipo.casefold() == "obligatorio"):
+            self.tipo = "Obligatorio"
+        elif(tipo.casefold() == "optativo"):
+            self.tipo = "Optativo"
         pass
 
 class Docente:

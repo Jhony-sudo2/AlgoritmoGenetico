@@ -38,46 +38,46 @@ class InterfazAcademica:
             Salon("Laboratorio de Química 2", 25)
         ]
         self.cursos = [
-            Curso("Programación I", "SYS101", "Ingeniería en Sistemas", "1", "A", True),
-            Curso("Programación II", "SYS102", "Ingeniería en Sistemas", "2", "B", True),
-            Curso("Bases de Datos", "SYS103", "Ingeniería en Sistemas", "3", "A", True),
-            Curso("Algoritmos Avanzados", "SYS104", "Ingeniería en Sistemas", "4", "B", False),
-            Curso("Inteligencia Artificial", "SYS105", "Ingeniería en Sistemas", "5", "C", False),
-            Curso("Redes de Computadoras", "SYS106", "Ingeniería en Sistemas", "6", "A", True),
-            Curso("Sistemas Operativos", "SYS107", "Ingeniería en Sistemas", "3", "B", True),
-            Curso("Ingeniería de Software", "SYS108", "Ingeniería en Sistemas", "4", "A", True),
-            Curso("Ciberseguridad", "SYS109", "Ingeniería en Sistemas", "5", "B", False),
-            Curso("Proyectos de TI", "SYS110", "Ingeniería en Sistemas", "6", "C", True),
-            Curso("Cálculo Estructural", "CIV101", "Ingeniería Civil", "1", "A", True),
-            Curso("Mecánica de Suelos", "CIV102", "Ingeniería Civil", "2", "B", True),
-            Curso("Diseño de Puentes", "CIV103", "Ingeniería Civil", "3", "A", False),
-            Curso("Hidráulica", "CIV104", "Ingeniería Civil", "4", "B", True),
-            Curso("Construcción Sostenible", "CIV105", "Ingeniería Civil", "5", "A", False),
-            Curso("Geotecnia", "CIV106", "Ingeniería Civil", "3", "B", True),
-            Curso("Topografía", "CIV107", "Ingeniería Civil", "2", "A", True),
-            Curso("Materiales de Construcción", "CIV108", "Ingeniería Civil", "1", "B", True),
-            Curso("Gestión de Proyectos", "CIV109", "Ingeniería Civil", "5", "C", True),
-            Curso("Diseño Sísmico", "CIV110", "Ingeniería Civil", "6", "A", False),
-            Curso("Biología Celular", "BIO101", "Ciencias Biológicas", "1", "A", True),
-            Curso("Genética", "BIO102", "Ciencias Biológicas", "2", "B", True),
-            Curso("Ecología", "BIO103", "Ciencias Biológicas", "3", "A", False),
-            Curso("Microbiología", "BIO104", "Ciencias Biológicas", "4", "B", True),
-            Curso("Biotecnología", "BIO105", "Ciencias Biológicas", "5", "C", False),
-            Curso("Fisiología Vegetal", "BIO106", "Ciencias Biológicas", "3", "A", True),
-            Curso("Zoología", "BIO107", "Ciencias Biológicas", "2", "B", True),
-            Curso("Bioquímica", "BIO108", "Ciencias Biológicas", "4", "A", True),
-            Curso("Evolución", "BIO109", "Ciencias Biológicas", "5", "B", False),
-            Curso("Biología Marina", "BIO110", "Ciencias Biológicas", "6", "C", True),
-            Curso("Introducción a la Administración", "ADM101", "Administración de Empresas", "1", "A", True),
-            Curso("Contabilidad Básica", "ADM102", "Administración de Empresas", "2", "B", True),
-            Curso("Marketing", "ADM103", "Administración de Empresas", "3", "A", True),
-            Curso("Finanzas Corporativas", "ADM104", "Administración de Empresas", "4", "B", True),
-            Curso("Gestión de Recursos Humanos", "ADM105", "Administración de Empresas", "5", "C", False),
-            Curso("Economía Empresarial", "ADM106", "Administración de Empresas", "3", "A", True),
-            Curso("Estrategia Empresarial", "ADM107", "Administración de Empresas", "4", "B", True),
-            Curso("Emprendimiento", "ADM108", "Administración de Empresas", "5", "A", False),
-            Curso("Comportamiento Organizacional", "ADM109", "Administración de Empresas", "2", "B", True),
-            Curso("Logística y Cadena de Suministro", "ADM110", "Administración de Empresas", "6", "C", True)
+            Curso("Programación I", "SYS101", "Ingeniería en Sistemas", "1", "A", "obligatorio"),
+            Curso("Programación II", "SYS102", "Ingeniería en Sistemas", "2", "B", "obligatorio"),
+            Curso("Bases de Datos", "SYS103", "Ingeniería en Sistemas", "3", "A", "obligatorio"),
+            Curso("Algoritmos Avanzados", "SYS104", "Ingeniería en Sistemas", "4", "B", "optativo"),
+            Curso("Inteligencia Artificial", "SYS105", "Ingeniería en Sistemas", "5", "C", "optativo"),
+            Curso("Redes de Computadoras", "SYS106", "Ingeniería en Sistemas", "6", "A", "obligatorio"),
+            Curso("Sistemas Operativos", "SYS107", "Ingeniería en Sistemas", "3", "B", "obligatorio"),
+            Curso("Ingeniería de Software", "SYS108", "Ingeniería en Sistemas", "4", "A", "obligatorio"),
+            Curso("Ciberseguridad", "SYS109", "Ingeniería en Sistemas", "5", "B", "optativo"),
+            Curso("Proyectos de TI", "SYS110", "Ingeniería en Sistemas", "6", "C", "obligatorio"),
+            Curso("Cálculo Estructural", "CIV101", "Ingeniería Civil", "1", "A", "obligatorio"),
+            Curso("Mecánica de Suelos", "CIV102", "Ingeniería Civil", "2", "B", "obligatorio"),
+            Curso("Diseño de Puentes", "CIV103", "Ingeniería Civil", "3", "A", "optativo"),
+            Curso("Hidráulica", "CIV104", "Ingeniería Civil", "4", "B", "obligatorio"),
+            Curso("Construcción Sostenible", "CIV105", "Ingeniería Civil", "5", "A", "optativo"),
+            Curso("Geotecnia", "CIV106", "Ingeniería Civil", "3", "B", "obligatorio"),
+            Curso("Topografía", "CIV107", "Ingeniería Civil", "2", "A", "obligatorio"),
+            Curso("Materiales de Construcción", "CIV108", "Ingeniería Civil", "1", "B", "obligatorio"),
+            Curso("Gestión de Proyectos", "CIV109", "Ingeniería Civil", "5", "C", "obligatorio"),
+            Curso("Diseño Sísmico", "CIV110", "Ingeniería Civil", "6", "A", "optativo"),
+            Curso("Biología Celular", "BIO101", "Ciencias Biológicas", "1", "A", "obligatorio"),
+            Curso("Genética", "BIO102", "Ciencias Biológicas", "2", "B", "obligatorio"),
+            Curso("Ecología", "BIO103", "Ciencias Biológicas", "3", "A", "optativo"),
+            Curso("Microbiología", "BIO104", "Ciencias Biológicas", "4", "B", "obligatorio"),
+            Curso("Biotecnología", "BIO105", "Ciencias Biológicas", "5", "C", "optativo"),
+            Curso("Fisiología Vegetal", "BIO106", "Ciencias Biológicas", "3", "A", "obligatorio"),
+            Curso("Zoología", "BIO107", "Ciencias Biológicas", "2", "B", "obligatorio"),
+            Curso("Bioquímica", "BIO108", "Ciencias Biológicas", "4", "A", "obligatorio"),
+            Curso("Evolución", "BIO109", "Ciencias Biológicas", "5", "B", "optativo"),
+            Curso("Biología Marina", "BIO110", "Ciencias Biológicas", "6", "C", "obligatorio"),
+            Curso("Introducción a la Administración", "ADM101", "Administración de Empresas", "1", "A", "obligatorio"),
+            Curso("Contabilidad Básica", "ADM102", "Administración de Empresas", "2", "B", "obligatorio"),
+            Curso("Marketing", "ADM103", "Administración de Empresas", "3", "A", "obligatorio"),
+            Curso("Finanzas Corporativas", "ADM104", "Administración de Empresas", "4", "B", "obligatorio"),
+            Curso("Gestión de Recursos Humanos", "ADM105", "Administración de Empresas", "5", "C", "optativo"),
+            Curso("Economía Empresarial", "ADM106", "Administración de Empresas", "3", "A", "obligatorio"),
+            Curso("Estrategia Empresarial", "ADM107", "Administración de Empresas", "4", "B", "obligatorio"),
+            Curso("Emprendimiento", "ADM108", "Administración de Empresas", "5", "A", "optativo"),
+            Curso("Comportamiento Organizacional", "ADM109", "Administración de Empresas", "2", "B", "obligatorio"),
+            Curso("Logística y Cadena de Suministro", "ADM110", "Administración de Empresas", "6", "C", "obligatorio")
         ]
         self.docentes = [
             Docente("Ana Pérez", "DOC001", "14:00", "18:00", [0, 1, 2, 3, 4, 5]),
@@ -333,9 +333,19 @@ class InterfazAcademica:
             self.cursosSeleccionados = self.cursos
         if not self.docentesSeleccionados:
             self.docentesSeleccionados = self.docentes
-        algoritmo = AlgoritmoGenetico(self.cursosSeleccionados,self.docentesSeleccionados,self.salones,self.AsignacionDocentes,self.NoPoblacion,self.Generaciones)
-        self.AsignacionDocentes = algoritmo.Iniciar()
-        self.mostrar_horarios()
+        continuar = True
+        mensaje = ""
+        for i,curso in enumerate(self.cursosSeleccionados):
+            docentes_posibles = [j for j, d in enumerate(self.docentesSeleccionados) if i in d.cursos_posibles]
+            if not docentes_posibles:
+                mensaje = f"No hay docentes disponibles para {curso.nombre}"
+                continuar = False
+        if continuar:
+            algoritmo = AlgoritmoGenetico(self.cursosSeleccionados,self.docentesSeleccionados,self.salones,self.AsignacionDocentes,self.NoPoblacion,self.Generaciones)
+            self.AsignacionDocentes = algoritmo.Iniciar()
+            self.mostrar_horarios()
+        else:
+            messagebox.showerror("Error",mensaje)
     def limpiar_panel(self):
         for widget in self.frame_tabla.winfo_children():
             widget.destroy()
@@ -393,12 +403,47 @@ class InterfazAcademica:
         def guardar():
             valores = tuple(entradas[col].get() for col in columnas)
             valores_dict = {col: entradas[col].get() for col in columnas}
-            self.tabla_actual.insert("", "end", values=valores)
-            clase = globals()[titulo]  
-            objeto = clase(**valores_dict)
-            arreglo.append(objeto)
-            ventana_nuevo.destroy()
-
+            if titulo == "Asignacion Docente":
+                indice = None
+                docentetmp = None
+                for i,curso in enumerate(self.cursos):
+                    if curso.codigo == valores_dict.get("cursos"):
+                        indice = i
+                for docente in self.docentes:
+                    if docente.codigo == valores_dict.get("docente"):
+                        docentetmp = docente
+                if not indice and not docentetmp:
+                    messagebox.showwarning("Error","el curso o docente no existe")
+                    return
+                else:
+                    if not indice in docentetmp.cursos_posibles:
+                        docentetmp.cursos_posibles.append(indice)
+                        messagebox.showinfo("OK","Curso asignado correctamente")
+                        self.mostrar_asignacion()
+                    else:
+                        messagebox.showerror("Error","El curso ya esta asignado al docente")
+                    ventana_nuevo.destroy()
+                pass
+            else:
+                clase = globals()[titulo]
+                error = False
+                objeto = None
+                try:
+                    objeto = clase(**valores_dict)
+                    
+                except:
+                    error = True
+                    mensaje = "Error en formato de datos"
+                    if titulo == "Curso":
+                        mensaje = "Semestre tiene que ser un numero entero"
+                    else:
+                        mensaje = "Error en formato de hora (H:m) 24 horas" 
+                    messagebox.showwarning("Error",mensaje)
+                print("error: ",error)
+                if error == False:
+                    arreglo.append(objeto)
+                    self.tabla_actual.insert("", "end", values=valores)
+                    ventana_nuevo.destroy()
         tk.Button(ventana_nuevo, text="Guardar", command=guardar).pack(pady=10)
 
     def importarCSV(self, listado, tipo, columnas, listado2=None):
@@ -443,7 +488,7 @@ class InterfazAcademica:
         self.botonExportacion = tk.Button(self.frame_superior, text="Importar CSV", bg="#008080", fg="white", font=("Arial", 10, "bold"),
                                          command=lambda: self.importarCSV(self.docentes, 3, columnas, listado2=self.cursos))
         self.boton_nuevo = tk.Button(self.frame_superior, text="Nuevo", bg="#008080", fg="white", font=("Arial", 10, "bold"),
-                                     command=lambda: self.crear_formulario(columnas, "Asignar Docente", self.AsignacionDocentes))
+                                     command=lambda: self.crear_formulario(columnas, "Asignacion Docente", self.cursos))
         self.boton_nuevo.pack(side="right", padx=5)
         self.botonExportacion.pack(side="right", padx=5)
 

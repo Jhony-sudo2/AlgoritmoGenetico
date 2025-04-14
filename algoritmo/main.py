@@ -1,5 +1,7 @@
 
 import random
+import time
+import tracemalloc
 from typing import List
 from algoritmo.cromosoma import Cromosoma, Gen
 from algoritmo.datos import *
@@ -21,21 +23,31 @@ class AlgoritmoGenetico:
         self.promedios = []
         self.generaciones = []
         self.estadisticas:Estadisticas = Estadisticas()
+        self.estadisticas.Iteraciones = self.generacionesMaxima
 
     def Iniciar(self):
+        inicio_tiempo = time.perf_counter()
+        tracemalloc.start()
         continuar = True
         self.generarPoblacionInicial()
-        while(continuar):
+        while continuar:
             self.Seleccion()
             self.Cruzamiento()
             self.Mutacion()
             continuar = self.finalizacion()
-            pass
         self.mejorOpcion()
         self.graficar()
-        crerPdf("horario.pdf",self.opcionMejor,self.cursos,self.docentes,self.salones)
+        
+        fin_tiempo = time.perf_counter()
+        tiempo_ejecucion = fin_tiempo - inicio_tiempo
+        memoria_actual, memoria_pico = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+        memoria_pico_mb = memoria_pico / (1024 * 1024)  # Convertir de bytes a MB
+        self.estadisticas.espacioMemoria = memoria_pico_mb
+        self.estadisticas.TiempoEjecucion = tiempo_ejecucion
+        crerPdf("horario.pdf", self.opcionMejor, self.cursos, self.docentes, self.salones)
         crearPDFEstadisticas(self.estadisticas)
-        crearCSV("horario.csv",self.opcionMejor,self.cursos,self.docentes,self.salones)
+        crearCSV("horario.csv", self.opcionMejor, self.cursos, self.docentes, self.salones)
         return self.opcionMejor
 
     def generarPoblacionInicial(self):

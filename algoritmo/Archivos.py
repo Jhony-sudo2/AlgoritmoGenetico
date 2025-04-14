@@ -16,11 +16,11 @@ def crerPdf(nombre_archivo, cromosoma:Cromosoma, cursos:List[Curso], docentes, s
     colores = {}
     for gen in cromosoma.Genes:
         if cursos[gen.curso].carrera is not colores:
-            codigo = (random.randrange(250),random.randrange(250),random.randrange(250))
+            codigo = (random.randrange(100,250),random.randrange(100,250),random.randrange(100,250))
             colores[cursos[gen.curso].carrera] = codigo
             
     styles = getSampleStyleSheet()
-    elementos.append(Paragraph("Horario de Clases INGENIERIA-CUNOC", styles['Heading1']))
+    elementos.append(Paragraph("Horario de Clases INGENIERIA-CUNOC PUNTUACION: "+ str(cromosoma.puntuacion), styles['Heading1']))
     
     num_horarios = 10  
     num_salones = len(salones)
@@ -92,16 +92,16 @@ def crearPDFEstadisticas(estadisticas:Estadisticas):
     datos[4][0] = "Iteraciones"
     datos[4][1] = estadisticas.Iteraciones
     datos[5][0] = "Tiempo Ejecucion"
-    datos[5][1] = estadisticas.TiempoEjecucion
+    datos[5][1] = str(estadisticas.TiempoEjecucion) + " segundos"
     datos[6][0] = "Porcentaje Cursos"
     datos[6][1] = estadisticas.porcentajeCursos
     datos[7][0] = "Espacio Memoria"
-    datos[7][1] = estadisticas.espacioMemoria
+    datos[7][1] = str(estadisticas.espacioMemoria) + "  MB"
 
 
     tabla = Table(datos)
     tabla._argW = [100] * (2)      #ancho  
-    tabla._argH = [40] * (5)   #alto
+    tabla._argH = [40] * (8)   #alto
     
 
 
