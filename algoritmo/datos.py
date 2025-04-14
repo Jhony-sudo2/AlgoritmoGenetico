@@ -19,6 +19,8 @@ class Curso:
             self.tipo = "Obligatorio"
         elif(tipo.casefold() == "optativo"):
             self.tipo = "Optativo"
+        else:
+            raise ValueError(f"Error en tipo de curso")
         pass
 
 class Docente:
@@ -27,7 +29,10 @@ class Docente:
         self.codigo:str = codigo
         self.horaEntrada = datetime.strptime(horaEntrada,"%H:%M").time()
         self.horaSalida = datetime.strptime(horaSalida,"%H:%M").time()
-        self.cursos_posibles = cursos_posibles
+        if cursos_posibles == None:
+            self.cursos_posibles = []
+        else:
+            self.cursos_posibles = cursos_posibles
         pass    
 
 class Estadisticas:

@@ -96,7 +96,7 @@ class Cromosoma:
                                  cursos[g.curso].semestre == semestre])
                 for i in range(len(horarios) - 1):
                     if horarios[i + 1] == horarios[i] + 1:
-                        self.puntuacion += 2
+                        self.puntuacion += 1
 
     def getHorario(self, i: int) -> str:
         return self.HORARIOS[i] if 0 <= i < len(self.HORARIOS) else "Horario inválido"
@@ -106,9 +106,13 @@ class Cromosoma:
             #print("Curso: ", cursos[gen.curso].nombre, "Docente: ", docentes[gen.docente].nombre, "Salon: ", salones[gen.salon].nombre, "Horario: ", self.HORARIOS[gen.horario])
             print("(",gen.curso,",",gen.docente,",",gen.horario," )")
 
-    def mutacion_random_resetting(self, cursos: List[Curso], docentes: List[Docente], salones: List[Salon],estadisticas:Estadisticas):
+    def mutacion_random_resetting(self, cursos: List[Curso], docentes: List[Docente], salones: List[Salon],asignacionManual:List[Gen],estadisticas:Estadisticas):
         gentmp:Gen = random.sample(self.Genes,1)[0]
         tipo = random.randint(0,3)
+        if tipo == 2 and asignacionManual:
+            for gen in asignacionManual:
+                if gentmp.curso == gen.curso:
+                    tipo = random.choice([1, 3])
         match tipo:
             case 1:
                 docentes_posibles = [j for j, d in enumerate(docentes) if gentmp.curso in d.cursos_posibles]

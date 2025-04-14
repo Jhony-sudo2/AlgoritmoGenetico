@@ -5,6 +5,7 @@ from reportlab.lib.pagesizes import letter, landscape
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
+from tkinter import messagebox
 
 from algoritmo.cromosoma import Cromosoma
 from algoritmo.datos import *
@@ -59,7 +60,7 @@ def crerPdf(nombre_archivo, cromosoma:Cromosoma, cursos:List[Curso], docentes, s
         indiceSalon = gen.salon
         carrera = curso.carrera     
         color = colores[carrera]
-        datos[indiceHorario + 1][indiceSalon + 1] = f"{curso.nombre}\n({docente_nombre}) {curso.semestre}"
+        datos[indiceHorario + 1][indiceSalon + 1] = f"{curso.nombre}\n({docente_nombre}) {curso.semestre} \n {curso.seccion}"
         tmp = ("BACKGROUND",(indiceSalon+1,indiceHorario+1),(indiceSalon+1,indiceHorario+1),colors.Color(color[0]/255,color[1]/255,color[2]/255))
         estilo.append(tmp)
     estilo2 = TableStyle(estilo)
@@ -112,39 +113,79 @@ def crearPDFEstadisticas(estadisticas:Estadisticas):
 
 def crearCSV(nombre_archivo, cromosoma, cursos, docentes, salones):
     with open(nombre_archivo, 'w') as file:
-        file.write("Horario,Salon,Cursos,Docentes\n")
+        file.write("Horario,Salon,Cursos,Docentes,Seccion\n")
         for gen in cromosoma.Genes:
             curso_nombre = cursos[gen.curso].nombre
             docente_nombre = docentes[gen.docente].nombre
             horario = cromosoma.getHorario(gen.horario)
             salon = salones[gen.salon].nombre
-            file.write(f"{horario},{salon},{curso_nombre},{docente_nombre}\n")
+            seccion = cursos[gen.curso].seccion
+            file.write(f"{horario},{salon},{curso_nombre},{docente_nombre},{seccion}\n")
     print(f"CSV creado: {nombre_archivo}")
 
-def leerCSV(archivo,listado,tipo:int,listado2):
+def leerCSV(archivo,listado,tipo:int,docentelist,cursolist):
     #tipo: 1.cursos  2. docente 3. relacionesCursoDocente 4.salones
-    if tipo == 3:
-        docente_dict = {docente.codigo: docente for docente in listado}
-        curso_indices = {curso.codigo: idx for idx, curso in enumerate(listado2)}
+    
+    docente_dict = {docente.codigo: docente for docente in docentelist}
+    curso_indices = {curso.codigo: curso for curso in cursolist}
     with open(archivo,newline='',encoding='utf-8') as csvfile:
         spamreader = csv.DictReader(csvfile)
-        for row in spamreader:
+        spamreader.fieldnames = [name.lower() for name in spamreader.fieldnames]
+        print("es tipo: ",tipo)
+        for i,row in enumerate(spamreader):
             match tipo:
                 case 1:
-                    salon = Curso(row['Nombre'],row['Código'],row['Carrera'],row['Semestre'],row['Sección'],row['Tipo'])
-                    listado.append(salon)
+                    try:
+                        curso = Curso(row['nombre'],row['codigo'],row['carrera'],row['semestre'],row['seccion'],row['tipo'])
+                        if curso.codigo in curso_indices and curso.seccion == curso_indices.get(curso.codigo).seccion:
+                            messagebox.showerror("Error","Ya existe un curso con codigo: " +str(curso.codigo) )
+                        elif curso.codigo in curso_indices and curso.seccion != curso_indices.get(curso.codigo).seccion:
+                            repetido = curso_indices.get(curso.codigo)
+                            curso.nombre = repetido.nombre
+                            curso.carrera = repetido.carrera
+                            curso.semestre = repetido.semestre
+                            curso.tipo = repetido.semestre
+                        else:
+                            listado.append(curso)
+                    except KeyError as e:
+                        messagebox.showerror("Error","Columna no encontrada: " + str(e))
+                        return
+                    except:
+                        messagebox.showerror("Error","error al crear cursos formato invalido linea: " + str(i+2),)
+                    
                 case 2:
-                    docente = Docente(row['Nombre'],row['Registro'],row['Hora Entrada'],row['Hora Salida'])
-                    listado.append(docente)
+                    try:
+                        docente = Docente(row['nombre'],row['registro'],row['hora entrada'],row['hora salida'])
+                        if docente.codigo in docente_dict:
+                            messagebox.showerror("Error","ya existe un docente con codigo: " + str(docente.codigo))
+                        else:
+                            listado.append(docente)
+                    except KeyError as e:
+                        messagebox.showerror("Error","Columna no encontrada: " + str(e))
+                        return
+                    except:
+                        messagebox.showerror("Error","error al crear cursos formato invalido linea: " + str(i+2),)
+                        
                 case 3:
-                    registro = row['Registro de Personal']
-                    codigo_curso = row['Código de Curso']
+                    registro = row['registro de personal']
+                    codigo_curso = row['codigo de curso']
                     if registro in docente_dict and codigo_curso in curso_indices:
                         docente = docente_dict[registro]
-                        indice_curso = curso_indices[codigo_curso]
-                        docente.cursos_posibles.append(indice_curso)
+
+                        indice_curso = []
+                        for x,cursotmp in enumerate(cursolist):
+                            if cursotmp.codigo == codigo_curso:
+                                indice_curso.append(x)
+                        for indice in indice_curso:
+                            docente.cursos_posibles.append(indice)
+                    elif registro in docente_dict:
+                        messagebox.showerror("Error","El curso: " + codigo_curso + " no existe")
+                    else:
+                        messagebox.showerror("Error","El docente codigo: " + registro + " no existe")
+
+
                 case 4:
-                    salon = Salon(row['Nombre'],row['id'])
+                    salon = Salon(row['nombre'],row['id'])
                     listado.append(salon)
                     pass
 

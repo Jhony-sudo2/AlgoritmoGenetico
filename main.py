@@ -11,88 +11,14 @@ from algoritmo.main import AlgoritmoGenetico
 class InterfazAcademica:
     def __init__(self, root):
         self.AsignacionDocentes = []
+        self.asignacionManuales = []
         self.cursosSeleccionados = []
         self.docentesSeleccionados = []
         self.NoPoblacion = 20
         self.Generaciones = 50
-        self.salones = [
-            Salon("Aula Magna 1", 120),
-            Salon("Aula Magna 2", 100),
-            Salon("Laboratorio de Informática 1", 30),
-            Salon("Laboratorio de Informática 2", 25),
-            Salon("Aula 301", 40),
-            Salon("Sala de Conferencias 1", 80),
-            Salon("Sala de Conferencias 2", 70),
-            Salon("Laboratorio de Física 1", 35),
-            Salon("Laboratorio de Física 2", 30),
-            Salon("Aula 302", 45),
-            Salon("Aula 401", 60),
-            Salon("Aula 402", 50),
-            Salon("Laboratorio de Biología 1", 25),
-            Salon("Laboratorio de Biología 2", 20),
-            Salon("Sala de Proyecciones 1", 90),
-            Salon("Sala de Proyecciones 2", 85),
-            Salon("Aula 501", 55),
-            Salon("Aula 502", 50),
-            Salon("Laboratorio de Química 1", 30),
-            Salon("Laboratorio de Química 2", 25)
-        ]
-        self.cursos = [
-            Curso("Programación I", "SYS101", "Ingeniería en Sistemas", "1", "A", "obligatorio"),
-            Curso("Programación II", "SYS102", "Ingeniería en Sistemas", "2", "B", "obligatorio"),
-            Curso("Bases de Datos", "SYS103", "Ingeniería en Sistemas", "3", "A", "obligatorio"),
-            Curso("Algoritmos Avanzados", "SYS104", "Ingeniería en Sistemas", "4", "B", "optativo"),
-            Curso("Inteligencia Artificial", "SYS105", "Ingeniería en Sistemas", "5", "C", "optativo"),
-            Curso("Redes de Computadoras", "SYS106", "Ingeniería en Sistemas", "6", "A", "obligatorio"),
-            Curso("Sistemas Operativos", "SYS107", "Ingeniería en Sistemas", "3", "B", "obligatorio"),
-            Curso("Ingeniería de Software", "SYS108", "Ingeniería en Sistemas", "4", "A", "obligatorio"),
-            Curso("Ciberseguridad", "SYS109", "Ingeniería en Sistemas", "5", "B", "optativo"),
-            Curso("Proyectos de TI", "SYS110", "Ingeniería en Sistemas", "6", "C", "obligatorio"),
-            Curso("Cálculo Estructural", "CIV101", "Ingeniería Civil", "1", "A", "obligatorio"),
-            Curso("Mecánica de Suelos", "CIV102", "Ingeniería Civil", "2", "B", "obligatorio"),
-            Curso("Diseño de Puentes", "CIV103", "Ingeniería Civil", "3", "A", "optativo"),
-            Curso("Hidráulica", "CIV104", "Ingeniería Civil", "4", "B", "obligatorio"),
-            Curso("Construcción Sostenible", "CIV105", "Ingeniería Civil", "5", "A", "optativo"),
-            Curso("Geotecnia", "CIV106", "Ingeniería Civil", "3", "B", "obligatorio"),
-            Curso("Topografía", "CIV107", "Ingeniería Civil", "2", "A", "obligatorio"),
-            Curso("Materiales de Construcción", "CIV108", "Ingeniería Civil", "1", "B", "obligatorio"),
-            Curso("Gestión de Proyectos", "CIV109", "Ingeniería Civil", "5", "C", "obligatorio"),
-            Curso("Diseño Sísmico", "CIV110", "Ingeniería Civil", "6", "A", "optativo"),
-            Curso("Biología Celular", "BIO101", "Ciencias Biológicas", "1", "A", "obligatorio"),
-            Curso("Genética", "BIO102", "Ciencias Biológicas", "2", "B", "obligatorio"),
-            Curso("Ecología", "BIO103", "Ciencias Biológicas", "3", "A", "optativo"),
-            Curso("Microbiología", "BIO104", "Ciencias Biológicas", "4", "B", "obligatorio"),
-            Curso("Biotecnología", "BIO105", "Ciencias Biológicas", "5", "C", "optativo"),
-            Curso("Fisiología Vegetal", "BIO106", "Ciencias Biológicas", "3", "A", "obligatorio"),
-            Curso("Zoología", "BIO107", "Ciencias Biológicas", "2", "B", "obligatorio"),
-            Curso("Bioquímica", "BIO108", "Ciencias Biológicas", "4", "A", "obligatorio"),
-            Curso("Evolución", "BIO109", "Ciencias Biológicas", "5", "B", "optativo"),
-            Curso("Biología Marina", "BIO110", "Ciencias Biológicas", "6", "C", "obligatorio"),
-            Curso("Introducción a la Administración", "ADM101", "Administración de Empresas", "1", "A", "obligatorio"),
-            Curso("Contabilidad Básica", "ADM102", "Administración de Empresas", "2", "B", "obligatorio"),
-            Curso("Marketing", "ADM103", "Administración de Empresas", "3", "A", "obligatorio"),
-            Curso("Finanzas Corporativas", "ADM104", "Administración de Empresas", "4", "B", "obligatorio"),
-            Curso("Gestión de Recursos Humanos", "ADM105", "Administración de Empresas", "5", "C", "optativo"),
-            Curso("Economía Empresarial", "ADM106", "Administración de Empresas", "3", "A", "obligatorio"),
-            Curso("Estrategia Empresarial", "ADM107", "Administración de Empresas", "4", "B", "obligatorio"),
-            Curso("Emprendimiento", "ADM108", "Administración de Empresas", "5", "A", "optativo"),
-            Curso("Comportamiento Organizacional", "ADM109", "Administración de Empresas", "2", "B", "obligatorio"),
-            Curso("Logística y Cadena de Suministro", "ADM110", "Administración de Empresas", "6", "C", "obligatorio")
-        ]
-        self.docentes = [
-            Docente("Ana Pérez", "DOC001", "14:00", "18:00", [0, 1, 2, 3, 4, 5]),
-            Docente("Juan Gómez", "DOC002", "18:00", "22:00", [3, 4, 5, 6, 7, 8]),
-            Docente("María López", "DOC003", "14:00", "20:00", [5, 6, 7, 8, 9]),
-            Docente("Carlos Ruiz", "DOC004", "13:00", "17:00", [10, 11, 12, 13, 14, 15]),
-            Docente("Elena Martínez", "DOC005", "17:00", "22:00", [12, 13, 14, 15, 16, 17]),
-            Docente("Pedro Sánchez", "DOC006", "14:00", "22:00", [15, 16, 17, 18, 19]),
-            Docente("Laura Fernández", "DOC007", "14:00", "19:00", [20, 21, 22, 23, 24, 25]),
-            Docente("Miguel Torres", "DOC008", "17:00", "22:00", [23, 24, 25, 26, 27, 28]),
-            Docente("Sofía Ramírez", "DOC009", "13:00", "16:00", [25, 26, 27, 28, 29]),
-            Docente("Andrés Vargas", "DOC010", "16:00", "22:00", [30, 31, 32, 33, 34, 35]),
-            Docente("Clara Díaz", "DOC011", "13:00", "22:00", [33, 34, 35, 36, 37, 38]),
-            Docente("Diego Morales", "DOC012", "14:00", "18:00", [35, 36, 37, 38, 39])
-        ]
+        self.salones = []
+        self.cursos = []
+        self.docentes = []
         self.horarios = [
             ("08:00-09:00", "Lunes"),
             ("09:00-10:00", "Lunes"),
@@ -112,19 +38,39 @@ class InterfazAcademica:
         self.menu_bar = tk.Menu(self.root)
         self.root.config(menu=self.menu_bar)
 
-        self.menu_bar.add_command(label="Cursos", command=self.mostrar_cursos)
-        self.menu_bar.add_command(label="Docentes", command=self.mostrar_docentes)
-        self.menu_bar.add_command(label="Asignación Docentes", command=self.mostrar_asignacion)
-        self.menu_bar.add_command(label="Salones", command=self.mostrar_salones)
-        self.menu_bar.add_command(label="Asignación Manual", command=self.mostrar_asignacion_manual)
-        self.menu_bar.add_command(label="Seleccion ", command=self.seleccion)
-        self.menu_bar.add_command(label="Generación Horario", command=self.mostrar_horarios)
-        self.menu_bar.add_command(label="Algoritmo", command=self.configurarAlgoritmo)
+        self.menu_options = [
+            ("Cursos", self.mostrar_cursos),
+            ("Docentes", self.mostrar_docentes),
+            ("Asignación Docentes", self.mostrar_asignacion),
+            ("Salones", self.mostrar_salones),
+            ("Asignación Manual", self.mostrar_asignacionesManuales),
+            ("Seleccion", self.seleccion),
+            ("Generación Horario", self.mostrar_horarios),
+            ("Algoritmo", self.configurarAlgoritmo)
+        ]
+
+        self.active_menu_index = tk.IntVar(value=-1)  
+        
+
+        for idx, (label, command) in enumerate(self.menu_options):
+            def make_command(cmd=command, index=idx):
+                return lambda: self.set_active_menu(index, cmd)
+            self.menu_bar.add_command(
+                label=label,
+                command=make_command()
+            )
 
 
         self.frame_superior = tk.Frame(self.root)
         self.frame_superior.pack(fill="x", padx=5, pady=5)
-
+        self.active_option_label = tk.Label(
+            self.frame_superior,
+            text="Opción activa: Ninguna",
+            font=("Arial", 12, "bold"),
+            fg="blue",
+            bg="white"
+        )
+        self.active_option_label.pack(side="left", padx=5)
         self.frame_tabla = tk.Frame(self.root, bg="lightgray")
         self.frame_tabla.pack(fill="both", expand=True, padx=5, pady=5)
 
@@ -134,6 +80,15 @@ class InterfazAcademica:
         self.botonCrear = None
         self.botonAsignacion = None
         self.mostrar_docentes()
+        self.set_active_menu(1) 
+
+    def set_active_menu(self, index, command=None):
+        self.active_menu_index.set(index)
+        option_name = self.menu_options[index][0]
+        self.active_option_label.config(text=f"{option_name}")
+        if command:
+            command()
+
     def configurarAlgoritmo(self):
         self.limpiar_panel()
         item = ttk.Treeview(self.frame_tabla)
@@ -169,7 +124,7 @@ class InterfazAcademica:
 
         frame = tk.Frame(ventana)
         frame.pack(fill="both", expand=True, padx=10, pady=10)
-
+        self.AsignacionDocentes = []
         tk.Label(frame, text="Seleccionar Curso:", font=("Arial", 10, "bold")).pack(pady=5)
         cursos_nombres = [curso.nombre for curso in self.cursosSeleccionados]
         curso_combobox = ttk.Combobox(frame, values=cursos_nombres, state="readonly")
@@ -199,26 +154,23 @@ class InterfazAcademica:
                     salon_seleccionado = i
             
             asignacion = Gen(curso_seleccionado,0,salon_seleccionado,0)
-            self.AsignacionDocentes.append(asignacion)
+            self.asignacionManuales.append(asignacion)
 
             messagebox.showinfo("Éxito", f"Curso '{curso_nombre}' asignado al salón '{salon_nombre}' correctamente.")
             ventana.destroy()
 
-            self.mostrar_horarios()
+            self.mostrar_asignacionesManuales()
 
         tk.Button(frame, text="Guardar Asignación", bg="#008080", fg="white", font=("Arial", 10, "bold"), command=guardar_asignacion).pack(pady=10)
 
     def seleccion(self):
         self.limpiar_panel()
 
-        # Frame principal para contener las dos secciones (docentes y cursos)
         frame_principal = tk.Frame(self.frame_tabla)
         frame_principal.pack(fill="both", expand=True)
 
-        # --- Sección de Docentes ---
         tk.Label(frame_principal, text="Seleccionar Docentes", font=("Arial", 12, "bold")).pack(anchor="w", padx=5, pady=5)
 
-        # Canvas y Scrollbar para docentes
         canvas_docentes = tk.Canvas(frame_principal)
         scrollbar_docentes = ttk.Scrollbar(frame_principal, orient="vertical", command=canvas_docentes.yview)
         frame_docentes = tk.Frame(canvas_docentes)
@@ -230,29 +182,25 @@ class InterfazAcademica:
         canvas_docentes.create_window((0, 0), window=frame_docentes, anchor="nw")
 
         seleccionados_docentes = {}
-        checkbuttons_docentes = {}  # Para almacenar los Checkbutton de docentes
+        checkbuttons_docentes = {}  # Checkbutton de docentes
 
         for docente in self.docentes:
             var = tk.BooleanVar(value=docente in self.docentesSeleccionados)
             seleccionados_docentes[docente.codigo] = var
 
-            # Frame para cada fila de docente
             frame_fila = tk.Frame(frame_docentes)
             frame_fila.pack(fill="x", padx=5, pady=2)
 
-            # Checkbutton para el docente
             check = tk.Checkbutton(frame_fila, variable=var)
             check.pack(side="left")
             checkbuttons_docentes[docente.codigo] = check
 
-            # Etiqueta con nombre y código del docente
             tk.Label(frame_fila, text=f"{docente.nombre} ({docente.codigo})").pack(side="left", padx=5)
 
-    # Ajustar el área de desplazamiento del Canvas
         frame_docentes.update_idletasks()
         canvas_docentes.configure(scrollregion=canvas_docentes.bbox("all"))
 
-    # Checkbutton para seleccionar todos los docentes
+    # Checkbutton seleccionar todos los docentes
         seleccionar_todos_docentes_var = tk.BooleanVar(value=all(var.get() for var in seleccionados_docentes.values()))
         def toggle_seleccionar_todos_docentes():
             estado = seleccionar_todos_docentes_var.get()
@@ -262,10 +210,8 @@ class InterfazAcademica:
         tk.Checkbutton(frame_principal, text="Seleccionar todos los docentes", variable=seleccionar_todos_docentes_var, 
                    command=toggle_seleccionar_todos_docentes).pack(anchor="w", padx=5, pady=5)
 
-    # --- Sección de Cursos ---
         tk.Label(frame_principal, text="Seleccionar Cursos", font=("Arial", 12, "bold")).pack(anchor="w", padx=5, pady=5)
 
-    # Canvas y Scrollbar para cursos
         canvas_cursos = tk.Canvas(frame_principal)
         scrollbar_cursos = ttk.Scrollbar(frame_principal, orient="vertical", command=canvas_cursos.yview)
         frame_cursos = tk.Frame(canvas_cursos)
@@ -277,29 +223,23 @@ class InterfazAcademica:
         canvas_cursos.create_window((0, 0), window=frame_cursos, anchor="nw")
 
         seleccionados_cursos = {}
-        checkbuttons_cursos = {}  # Para almacenar los Checkbutton de cursos
+        checkbuttons_cursos = {}  # Checkbutton de cursos
 
         for curso in self.cursos:
             var = tk.BooleanVar(value=curso in self.cursosSeleccionados)
             seleccionados_cursos[curso.codigo] = var
 
-            # Frame para cada fila de curso
             frame_fila = tk.Frame(frame_cursos)
             frame_fila.pack(fill="x", padx=5, pady=2)
 
-            # Checkbutton para el curso
             check = tk.Checkbutton(frame_fila, variable=var)
             check.pack(side="left")
             checkbuttons_cursos[curso.codigo] = check
-
-            # Etiqueta con nombre y código del curso
             tk.Label(frame_fila, text=f"{curso.nombre} ({curso.codigo})").pack(side="left", padx=5)
 
-    # Ajustar el área de desplazamiento del Canvas
         frame_cursos.update_idletasks()
         canvas_cursos.configure(scrollregion=canvas_cursos.bbox("all"))
 
-    # Checkbutton para seleccionar todos los cursos
         seleccionar_todos_cursos_var = tk.BooleanVar(value=all(var.get() for var in seleccionados_cursos.values()))
         def toggle_seleccionar_todos_cursos():
             estado = seleccionar_todos_cursos_var.get()
@@ -335,13 +275,23 @@ class InterfazAcademica:
             self.docentesSeleccionados = self.docentes
         continuar = True
         mensaje = ""
-        for i,curso in enumerate(self.cursosSeleccionados):
-            docentes_posibles = [j for j, d in enumerate(self.docentesSeleccionados) if i in d.cursos_posibles]
-            if not docentes_posibles:
-                mensaje = f"No hay docentes disponibles para {curso.nombre}"
-                continuar = False
+        if not self.docentesSeleccionados:
+            continuar = False
+            mensaje = f"No hay docentes ingresados"
+        if not self.cursosSeleccionados:
+            continuar = False
+            mensaje = f"No hay cursos ingresados"
+        if not self.salones:
+            continuar = False
+            mensaje = f"No hay salones ingresados"
         if continuar:
-            algoritmo = AlgoritmoGenetico(self.cursosSeleccionados,self.docentesSeleccionados,self.salones,self.AsignacionDocentes,self.NoPoblacion,self.Generaciones)
+            for i,curso in enumerate(self.cursosSeleccionados):
+                docentes_posibles = [j for j, d in enumerate(self.docentesSeleccionados) if i in d.cursos_posibles]
+                if not docentes_posibles:
+                    mensaje = f"No hay docentes disponibles para {curso.nombre}"
+                    continuar = False
+        if continuar:
+            algoritmo = AlgoritmoGenetico(self.cursosSeleccionados,self.docentesSeleccionados,self.salones,self.asignacionManuales,self.NoPoblacion,self.Generaciones)
             self.AsignacionDocentes = algoritmo.Iniciar()
             self.mostrar_horarios()
         else:
@@ -381,10 +331,11 @@ class InterfazAcademica:
             tabla_actual.pack(fill="both", expand=True)
         else:
             for docente in datos:
-                for curso in docente.cursos_posibles:
-                    valores = [docente.nombre, self.cursos[curso].nombre]
-                    tabla_actual.insert("", "end", values=valores)
-                    tabla_actual.pack(fill="both", expand=True)
+                if docente.cursos_posibles:
+                    for curso in docente.cursos_posibles:
+                        valores = [docente.nombre, self.cursos[curso].nombre]
+                        tabla_actual.insert("", "end", values=valores)
+                        tabla_actual.pack(fill="both", expand=True)
             self.asignacion = False
         return tabla_actual
 
@@ -396,42 +347,67 @@ class InterfazAcademica:
         entradas = {}
         for col in columnas:
             tk.Label(ventana_nuevo, text=f"{col}:").pack()
-            entrada = tk.Entry(ventana_nuevo)
-            entrada.pack()
+            if col.lower() == "tipo": 
+                entrada = ttk.Combobox(ventana_nuevo, values=["obligatorio", "optativo"], state="readonly")
+                entrada.pack()
+                entrada.set("obligatorio")  
+            else:
+                # Para otras columnas, usar un Entry normal
+                entrada = tk.Entry(ventana_nuevo)
+                entrada.pack()
             entradas[col] = entrada
 
         def guardar():
             valores = tuple(entradas[col].get() for col in columnas)
             valores_dict = {col: entradas[col].get() for col in columnas}
             if titulo == "Asignacion Docente":
-                indice = None
+                indice = []
                 docentetmp = None
                 for i,curso in enumerate(self.cursos):
                     if curso.codigo == valores_dict.get("cursos"):
-                        indice = i
+                        print("curso archivado")
+                        indice.append(i)
                 for docente in self.docentes:
                     if docente.codigo == valores_dict.get("docente"):
+                        print("docente archivado")
                         docentetmp = docente
                 if not indice and not docentetmp:
                     messagebox.showwarning("Error","el curso o docente no existe")
                     return
                 else:
-                    if not indice in docentetmp.cursos_posibles:
-                        docentetmp.cursos_posibles.append(indice)
-                        messagebox.showinfo("OK","Curso asignado correctamente")
-                        self.mostrar_asignacion()
-                    else:
-                        messagebox.showerror("Error","El curso ya esta asignado al docente")
+                    for indicetmp in indice:
+                        if not indice in docentetmp.cursos_posibles:
+                            docentetmp.cursos_posibles.append(indicetmp)
+                        else:
+                            messagebox.showerror("Error","El curso ya esta asignado al docente")
+                    self.mostrar_asignacion()
                     ventana_nuevo.destroy()
                 pass
             else:
+
                 clase = globals()[titulo]
                 error = False
                 objeto = None
                 try:
                     objeto = clase(**valores_dict)
-                    
-                except:
+                    if isinstance(objeto,Curso):
+                        curso_indices = {curso.codigo: curso for curso in self.cursos}
+                        if objeto.codigo in curso_indices and objeto.seccion == curso_indices.get(objeto.codigo).seccion:
+                            error = True
+                            mensaje = "Ya hay un curso con el codigo: " + str(objeto.codigo)
+                        elif objeto.codigo in curso_indices and objeto.seccion != curso_indices.get(objeto.codigo).seccion:
+                            nuevaSeccion =  curso_indices.get(objeto.codigo)
+                            objeto.nombre = nuevaSeccion.nombre
+                            objeto.semestre =nuevaSeccion.semestre
+                            objeto.carrera = nuevaSeccion.carrera
+                            objeto.tipo =  nuevaSeccion.tipo
+
+                    if isinstance(objeto,Docente):
+                        docente_indices = {docente.codigo:idx for idx, docente in enumerate(self.docentes)}
+                        if objeto.codigo in docente_indices:
+                            error = True
+                            mensaje = "Ya hay un docente con el codigo: " + str(objeto.codigo)
+                except Exception as e:
                     error = True
                     mensaje = "Error en formato de datos"
                     if titulo == "Curso":
@@ -439,8 +415,9 @@ class InterfazAcademica:
                     else:
                         mensaje = "Error en formato de hora (H:m) 24 horas" 
                     messagebox.showwarning("Error",mensaje)
-                print("error: ",error)
-                if error == False:
+                if error:
+                    messagebox.showwarning("Erro",mensaje)
+                else:
                     arreglo.append(objeto)
                     self.tabla_actual.insert("", "end", values=valores)
                     ventana_nuevo.destroy()
@@ -452,7 +429,7 @@ class InterfazAcademica:
             title="Seleccionar archivo",
             filetypes=[("Archivos de texto", "*.csv"), ("Todos los archivos", "*.*")]
         )
-        Archivos.leerCSV(file_path, listado, tipo, listado2)
+        Archivos.leerCSV(file_path, listado, tipo,self.docentes,self.cursos)
         if tipo == 3:
             self.asignacion = True
         self.limpiar_panel()
@@ -502,6 +479,20 @@ class InterfazAcademica:
                                      command=lambda: self.crear_formulario(columnas, "Salon", self.salones))
         self.boton_nuevo.pack(side="right", padx=5)
         self.botonExportacion.pack(side="right", padx=5)
+
+    def mostrar_asignacionesManuales(self):
+        self.limpiar_panel()
+        columnas = ("Horario", "Docente", "Curso", "Salón")
+        self.tabla_actual = self.crear_tabla(self.tabla_actual, self.frame_tabla, columnas, self.asignacionManuales)
+        self.botonCrear = tk.Button(self.frame_superior, text="Crear", bg="#008080", fg="white", font=("Arial", 10, "bold"),
+                                     command=lambda: self.mostrar_asignacion_manual())
+        self.botonCrear.pack(side="right", padx=5)
+        self.boton_nuevo = tk.Button(self.frame_superior, text="Eliminar Configuraciones", bg="#008080", fg="white", font=("Arial", 10, "bold"),
+                                     command=lambda: self.eliminarAsignacionesManuales())
+        self.boton_nuevo.pack(side='right',padx=5)
+    def eliminarAsignacionesManuales(self):
+        self.asignacionManuales = []
+        self.mostrar_asignacionesManuales()
 
     def mostrar_horarios(self):
         self.limpiar_panel()

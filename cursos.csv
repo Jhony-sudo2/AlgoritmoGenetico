@@ -1,14 +1,14 @@
-Nombre,Código,Carrera,Semestre,Sección,Tipo
+Nombre,Codigo,Carrera,Semestre,Seccion,Tipo
 Matemáticas Básicas,MAT101,Ingeniería,1,A,obligatorio
 Programación I,PROG101,Sistemas,2,B,obligatorio
 Física Avanzada,FIS201,Ingeniería,3,A,optativo
 Inteligencia Artificial,IA301,Sistemas,6,C,optativo
 Cálculo Diferencial,MAT102,Ingeniería,2,B,obligatorio
 Bases de Datos,BD201,Sistemas,4,A,obligatorio
-Química General,QUI101,Ciencias,1,A,obligatorio
+Química General,QUI101,Ciencias,1,A,obligatoriod
 Algoritmos Avanzados,ALG301,Sistemas,5,B,optativo
 Estadística,EST201,Ingeniería,3,C,obligatorio
-Biología Molecular,BIO301,Ciencias,5,A,Falsoptativoe
+Biología Molecular,BIO301,Ciencias,5,A,optativo
 Redes de Computadoras,RED301,Sistemas,6,B,obligatorio
 Mecánica Clásica,FIS101,Ingeniería,2,A,obligatorio
 Programación II,PROG201,Sistemas,3,C,obligatorio

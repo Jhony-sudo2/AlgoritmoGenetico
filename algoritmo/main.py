@@ -104,7 +104,7 @@ class AlgoritmoGenetico:
 
     def Mutacion(self):
         for cromosoma in self.seleccionados:
-            cromosoma.mutacion_random_resetting(self.cursos, self.docentes, self.salones,self.estadisticas)
+            cromosoma.mutacion_random_resetting(self.cursos, self.docentes, self.salones,self.asignacionesManuales,self.estadisticas)
         pass
     
     
