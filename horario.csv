@@ -1,15 +1,15 @@
 Horario,Salon,Cursos,Docentes,Seccion
-14:30-15:20,Aula 305,Matemáticas Básicas,Carlos Ruiz,A
-17:50-18:40,Sala de Proyecciones,Programación I,María López,B
-17:50-18:40,Aula 101,Física Avanzada,Laura Fernández,A
-16:10-17:00,Aula 401,Inteligencia Artificial,Pedro Sánchez,C
-15:20-16:10,Laboratorio 2,Cálculo Diferencial,Carlos Ruiz,B
-13:40-14:30,Laboratorio 1,Bases de Datos,Miguel Torres,A
-16:10-17:00,Laboratorio de Física,Algoritmos Avanzados,María López,B
-17:00-17:50,Aula 202,Estadística,Ana Pérez,C
-16:10-17:00,Sala de Conferencias,Biología Molecular,Miguel Torres,A
-18:40-19:30,Laboratorio de Física,Redes de Computadoras,María López,B
-14:30-15:20,Aula 401,Mecánica Clásica,Laura Fernández,A
-14:30-15:20,Laboratorio 2,Programación II,Juan Gómez,C
-18:40-19:30,Aula 401,Geometría Analítica,Ana Pérez,B
-15:20-16:10,Sala de Proyecciones,Ecología,Miguel Torres,A
+13:40-14:30,Aula 305,Matemáticas Básicas,Carlos Ruiz,A
+14:30-15:20,Aula 101,Programación I,María López,B
+17:50-18:40,Aula 401,Física Avanzada,Carlos Ruiz,A
+18:40-19:30,Aula 401,Inteligencia Artificial,María López,C
+14:30-15:20,Aula 202,Cálculo Diferencial,Ana Pérez,B
+17:50-18:40,Laboratorio 1,Bases de Datos,Miguel Torres,A
+13:40-14:30,Laboratorio 1,Algoritmos Avanzados,Juan Gómez,B
+19:30-20:20,Aula 305,Estadística,Laura Fernández,C
+19:30-20:20,Laboratorio 2,Biología Molecular,Elena Martínez,A
+17:00-17:50,Sala de Proyecciones,Redes de Computadoras,María López,B
+15:20-16:10,Aula 401,Mecánica Clásica,Laura Fernández,A
+14:30-15:20,Sala de Conferencias,Programación II,Pedro Sánchez,C
+18:40-19:30,Aula Magna,Geometría Analítica,Ana Pérez,B
+16:10-17:00,Aula 202,Ecología,Miguel Torres,A

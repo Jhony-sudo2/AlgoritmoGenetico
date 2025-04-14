@@ -429,11 +429,12 @@ class InterfazAcademica:
             title="Seleccionar archivo",
             filetypes=[("Archivos de texto", "*.csv"), ("Todos los archivos", "*.*")]
         )
-        Archivos.leerCSV(file_path, listado, tipo,self.docentes,self.cursos)
-        if tipo == 3:
-            self.asignacion = True
-        self.limpiar_panel()
-        self.crear_tabla(self.tabla_actual, self.frame_tabla, columnas, listado)
+        if file_path:
+            Archivos.leerCSV(file_path, listado, tipo,self.docentes,self.cursos)
+            if tipo == 3:
+                self.asignacion = True
+            self.limpiar_panel()
+            self.crear_tabla(self.tabla_actual, self.frame_tabla, columnas, listado)
 
     def mostrar_cursos(self):
         self.limpiar_panel()

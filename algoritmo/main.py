@@ -109,11 +109,7 @@ class AlgoritmoGenetico:
     
     
     def finalizacion(self):
-        #print("generacion: ",self.generacionesMaxima)
-        #for gen in self.seleccionados:
-        #    print("Puntuacion: ",gen.puntuacion," Promedio solucion: " + str(self.promedioPoblacion(self.seleccionados)))
-            #print("Puntuacion promedio: ",self.promedioPoblacion(self.seleccionados))
-
+       
         promediotmp = self.promedioPoblacion(self.seleccionados)
         self.poblacionesFinales.append(self.seleccionados)
         self.promedios.append(promediotmp)
